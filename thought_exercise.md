@@ -23,8 +23,8 @@ Tell the client: *We can build a system that tells your QA team which defect typ
 **1. Environmental and pour condition logs for all three past projects.**
 What it unlocks: The single biggest gap is the link between conditions and defects. Temperature at pour time, humidity, wind speed, and curing method are the actual causal inputs. Even a simple spreadsheet per project unlocks a proper feature vector and transforms the problem from pattern-matching to causal modelling.
 
-**2. Defect location and volume for each photo (not just type).**
-What it unlocks: Right now we know a defect happened; we do not know where in the structure or how large. Location data lets us build a spatial heatmap of defect likelihood (e.g., "column bases with this mix design and these conditions produce honeycombing in the bottom 30cm"). This is the kind of actionable output the QA engineer can actually use on site.
+**2. Complete QA metadata for each photo (location, volume, severity, and repair outcome).**
+What it unlocks: Right now we know a defect happened; we do not know where in the structure, how large or severe it was, or how it was resolved. This metadata lets us build spatial risk signals and prioritize defects by impact (e.g., "column bases with this mix design and these conditions produce severe honeycombing in the bottom 30cm"). This is the kind of actionable output the QA engineer can actually use on site.
 
 **3. Mix design and defect records from any other projects in the firm's history — even without photos.**
 What it unlocks: Even tabular records (mix parameters + defect type counts) from 10–20 additional projects would be enough to train a lightweight classifier (logistic regression or gradient boosting) that is statistically defensible. Photos are valuable but not the bottleneck — the bottleneck is sample size. Additional structured records solve that faster than more photos from the same three projects.
