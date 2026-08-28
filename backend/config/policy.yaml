@@ -1,0 +1,107 @@
+# ============================================================
+# CollectIQ Escalation & Collections Policy
+# All thresholds and timings are configurable here.
+# No code changes required to adjust policy behaviour.
+# ============================================================
+
+reminders:
+  first_reminder:
+    overdue_days: 1
+    recipient_tier: customer
+    mode: auto_send
+    frequency_days: null          # one-shot
+
+  second_reminder:
+    overdue_days: 7
+    recipient_tier: customer
+    mode: auto_send
+    frequency_days: null
+
+  third_reminder:
+    overdue_days: 14
+    recipient_tier: customer
+    mode: auto_send
+    frequency_days: null
+
+escalation:
+  sales:
+    overdue_days: 21
+    recipient_tier: sales
+    mode: human_signoff
+    frequency_days: 7             # re-ping sales every 7 days if no resolution
+
+  controller:
+    overdue_days: 35
+    recipient_tier: controller
+    mode: human_signoff
+    frequency_days: 14
+
+  ceo:
+    overdue_days: 50
+    recipient_tier: ceo
+    mode: human_signoff
+    frequency_days: null
+
+  owner:
+    overdue_days: 65
+    recipient_tier: owner
+    mode: human_signoff
+    frequency_days: null
+
+human_review:
+  triggers:
+    - dispute
+    - payment_plan_request
+    - legal_language
+    - low_confidence
+    - ambiguous_invoice
+    - high_amount
+
+  # Invoices above this amount require sign-off even for customer-tier actions
+  high_amount_threshold: 300000
+
+  # LLM confidence below this threshold routes to human review
+  low_confidence_threshold: 0.70
+
+auto_send:
+  # ALL of these conditions must be true for auto_send to proceed
+  conditions:
+    - valid_invoice_customer_mapping
+    - payment_status_current               # reconciliation check passed
+    - no_active_dispute
+    - no_recent_contradictory_reply        # no reply in last 3 days overriding action
+    - policy_allows_auto_send              # mode == auto_send in policy
+    - confidence_above_threshold           # if email context involved
+    - amount_below_high_threshold          # unless overridden by human
+
+promise_to_pay:
+  # Grace days after a promised payment date before resuming/escalating
+  grace_days: 2
+  # Broken promise escalates immediately to current escalation tier + 1
+  escalate_on_breach: true
+
+risk:
+  weights:
+    historical_late_rate: 25        # % of past invoices paid late
+    avg_days_late: 15               # average days late historically
+    current_overdue_days: 20        # how many days overdue NOW
+    broken_promises: 15             # count of missed promise-to-pay
+    previous_disputes: 10           # count of past disputes
+    reminders_sent: 5               # reminders sent on current invoice
+    worsening_behavior: 10          # recent trend worse than historical avg
+
+  # Max raw score for each dimension (used for normalization)
+  max_values:
+    historical_late_rate: 100       # percentage
+    avg_days_late: 60               # days
+    current_overdue_days: 90        # days
+    broken_promises: 5              # count
+    previous_disputes: 5            # count
+    reminders_sent: 6               # count
+    worsening_behavior: 1           # boolean (0 or 1)
+
+  thresholds:
+    low: 20
+    medium: 35
+    high: 50
+    critical: 70

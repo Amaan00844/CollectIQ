@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 99%;
+    --foreground: 222 15% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 15% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 15% 12%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 15% 25%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 222 15% 25%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 221 83% 53%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222 20% 9%;
+    --foreground: 220 14% 93%;
+    --card: 222 18% 12%;
+    --card-foreground: 220 14% 93%;
+    --popover: 222 18% 12%;
+    --popover-foreground: 220 14% 93%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 20% 9%;
+    --secondary: 222 16% 18%;
+    --secondary-foreground: 220 14% 80%;
+    --muted: 222 16% 18%;
+    --muted-foreground: 220 9% 55%;
+    --accent: 222 16% 18%;
+    --accent-foreground: 220 14% 80%;
+    --destructive: 0 63% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 16% 22%;
+    --input: 222 16% 22%;
+    --ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground antialiased; }
+  h1, h2, h3, h4, h5, h6 { @apply font-semibold tracking-tight; }
+}
+
+/* Status color utilities */
+.status-paid     { @apply bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-900; }
+.status-open     { @apply bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950 dark:text-blue-400 dark:border-blue-900; }
+.status-due-soon { @apply bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-400 dark:border-amber-900; }
+.status-overdue  { @apply bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-900; }
+.status-disputed { @apply bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950 dark:text-purple-400 dark:border-purple-900; }
+.status-promise  { @apply bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-950 dark:text-cyan-400 dark:border-cyan-900; }
+
+.risk-low      { @apply bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400; }
+.risk-medium   { @apply bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-400; }
+.risk-high     { @apply bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-400; }
+.risk-critical { @apply bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950 dark:text-purple-400; }

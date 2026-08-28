@@ -1,0 +1,13 @@
+customer_id,customer_name,contact_email,sales_rep,controller_email,ceo_email,owner_email,industry,payment_terms_days
+CUST-001,Acme Construction Ltd,accounts@acmeconstruction.com,sarah.miller@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Construction,30
+CUST-002,Bharat Manufacturing Co,finance@bharatmfg.com,raj.patel@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Manufacturing,45
+CUST-003,Stellar Logistics Pvt Ltd,ap@stellarlogistics.com,sarah.miller@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Logistics,30
+CUST-004,NovaTech Solutions,billing@novatech.in,raj.patel@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Technology,15
+CUST-005,Greenfield Retailers,accounts@greenfieldretail.com,sarah.miller@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Retail,30
+CUST-006,Precision Engineers Ltd,finance@precisioneng.com,raj.patel@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Manufacturing,45
+CUST-007,City Healthcare Network,billing@cityhealthcare.in,sarah.miller@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Healthcare,30
+CUST-008,Apex Distributors,ap@apexdist.com,raj.patel@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Logistics,30
+CUST-009,Sunrise Exports Ltd,accounts@sunriseexports.com,sarah.miller@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Manufacturing,60
+CUST-010,Metro Infra Projects,finance@metroinfra.in,raj.patel@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Construction,45
+CUST-011,Digital Frontier Inc,billing@digitalfrontier.com,sarah.miller@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Technology,15
+CUST-012,Royal Hospitality Group,accounts@royalhospitality.in,raj.patel@collectiq.com,controller@collectiq.com,ceo@collectiq.com,owner@collectiq.com,Hospitality,30

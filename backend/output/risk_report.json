@@ -1,0 +1,297 @@
+[
+  {
+    "invoice_id": "INV-091",
+    "customer_id": "CUST-009",
+    "customer_name": "Sunrise Exports Ltd",
+    "amount": 580000.0,
+    "amount_outstanding": 580000.0,
+    "due_date": "2025-02-06",
+    "days_overdue": 42,
+    "risk_level": "HIGH",
+    "risk_score": 52.3,
+    "reasons": [
+      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
+      "Average payment delay: 22 days late across historical invoices",
+      "Current invoice is 42 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Recent payment behavior is worsening compared to historical average",
+      "Invoice amount ₹580,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 21.77777777777778,
+      "current_overdue_days": 42.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 1.0
+    }
+  },
+  {
+    "invoice_id": "INV-093",
+    "customer_id": "CUST-001",
+    "customer_name": "Acme Construction Ltd",
+    "amount": 310000.0,
+    "amount_outstanding": 310000.0,
+    "due_date": "2025-01-11",
+    "days_overdue": 68,
+    "risk_level": "MEDIUM",
+    "risk_score": 46.5,
+    "reasons": [
+      "Customer historically pays late: 11 of 11 past invoices were overdue (100%)",
+      "Moderate average payment delay: 16 days",
+      "Current invoice is 68 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Invoice amount ₹310,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 15.545454545454545,
+      "current_overdue_days": 68.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-090",
+    "customer_id": "CUST-010",
+    "customer_name": "Metro Infra Projects",
+    "amount": 510000.0,
+    "amount_outstanding": 510000.0,
+    "due_date": "2025-01-17",
+    "days_overdue": 62,
+    "risk_level": "MEDIUM",
+    "risk_score": 46.4,
+    "reasons": [
+      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
+      "Average payment delay: 21 days late across historical invoices",
+      "Current invoice is 62 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Invoice amount ₹510,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 20.555555555555557,
+      "current_overdue_days": 62.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-092",
+    "customer_id": "CUST-002",
+    "customer_name": "Bharat Manufacturing Co",
+    "amount": 425000.0,
+    "amount_outstanding": 425000.0,
+    "due_date": "2025-01-24",
+    "days_overdue": 55,
+    "risk_level": "MEDIUM",
+    "risk_score": 44.6,
+    "reasons": [
+      "Customer historically pays late: 10 of 10 past invoices were overdue (100%)",
+      "Moderate average payment delay: 19 days",
+      "Current invoice is 55 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Invoice amount ₹425,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 19.4,
+      "current_overdue_days": 55.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-094",
+    "customer_id": "CUST-006",
+    "customer_name": "Precision Engineers Ltd",
+    "amount": 380000.0,
+    "amount_outstanding": 380000.0,
+    "due_date": "2025-01-29",
+    "days_overdue": 50,
+    "risk_level": "MEDIUM",
+    "risk_score": 42.6,
+    "reasons": [
+      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
+      "Moderate average payment delay: 16 days",
+      "Current invoice is 50 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Invoice amount ₹380,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 16.0,
+      "current_overdue_days": 50.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-096",
+    "customer_id": "CUST-009",
+    "customer_name": "Sunrise Exports Ltd",
+    "amount": 630000.0,
+    "amount_outstanding": 630000.0,
+    "due_date": "2025-03-11",
+    "days_overdue": 9,
+    "risk_level": "MEDIUM",
+    "risk_score": 42.4,
+    "reasons": [
+      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
+      "Average payment delay: 22 days late across historical invoices",
+      "Current invoice is 9 day(s) overdue",
+      "Recent payment behavior is worsening compared to historical average",
+      "Invoice amount ₹630,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 21.77777777777778,
+      "current_overdue_days": 9.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 0.0,
+      "worsening_behavior": 1.0
+    }
+  },
+  {
+    "invoice_id": "INV-095",
+    "customer_id": "CUST-010",
+    "customer_name": "Metro Infra Projects",
+    "amount": 495000.0,
+    "amount_outstanding": 495000.0,
+    "due_date": "2025-02-20",
+    "days_overdue": 28,
+    "risk_level": "MEDIUM",
+    "risk_score": 38.9,
+    "reasons": [
+      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
+      "Average payment delay: 21 days late across historical invoices",
+      "Current invoice is 28 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Invoice amount ₹495,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 20.555555555555557,
+      "current_overdue_days": 28.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-098",
+    "customer_id": "CUST-001",
+    "customer_name": "Acme Construction Ltd",
+    "amount": 340000.0,
+    "amount_outstanding": 340000.0,
+    "due_date": "2025-02-17",
+    "days_overdue": 31,
+    "risk_level": "MEDIUM",
+    "risk_score": 38.3,
+    "reasons": [
+      "Customer historically pays late: 11 of 11 past invoices were overdue (100%)",
+      "Moderate average payment delay: 16 days",
+      "Current invoice is 31 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Invoice amount ₹340,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 15.545454545454545,
+      "current_overdue_days": 31.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-097",
+    "customer_id": "CUST-002",
+    "customer_name": "Bharat Manufacturing Co",
+    "amount": 445000.0,
+    "amount_outstanding": 445000.0,
+    "due_date": "2025-02-28",
+    "days_overdue": 20,
+    "risk_level": "LOW",
+    "risk_score": 34.3,
+    "reasons": [
+      "Customer historically pays late: 10 of 10 past invoices were overdue (100%)",
+      "Moderate average payment delay: 19 days",
+      "Current invoice is 20 days overdue",
+      "Invoice amount ₹445,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 19.4,
+      "current_overdue_days": 20.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 0.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-099",
+    "customer_id": "CUST-006",
+    "customer_name": "Precision Engineers Ltd",
+    "amount": 395000.0,
+    "amount_outstanding": 395000.0,
+    "due_date": "2025-03-08",
+    "days_overdue": 12,
+    "risk_level": "LOW",
+    "risk_score": 32.5,
+    "reasons": [
+      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
+      "Moderate average payment delay: 16 days",
+      "Current invoice is 12 day(s) overdue",
+      "1 payment reminder(s) already sent for this invoice",
+      "Invoice amount ₹395,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 16.0,
+      "current_overdue_days": 12.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 1.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-100",
+    "customer_id": "CUST-010",
+    "customer_name": "Metro Infra Projects",
+    "amount": 520000.0,
+    "amount_outstanding": 520000.0,
+    "due_date": "2025-03-20",
+    "days_overdue": 0,
+    "risk_level": "LOW",
+    "risk_score": 30.1,
+    "reasons": [
+      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
+      "Average payment delay: 21 days late across historical invoices",
+      "Invoice amount ₹520,000 is above the high-value threshold"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 20.555555555555557,
+      "current_overdue_days": 0.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 0.0,
+      "worsening_behavior": 0.0
+    }
+  }
+]
