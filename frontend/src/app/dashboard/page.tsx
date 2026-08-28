@@ -16,11 +16,7 @@ import {
 import { KpiCard } from "@/components/shared/kpi-card";
 import { PageHeader } from "@/components/shared/page-header";
 import { DeliveryModeBadge, RiskBadge } from "@/components/shared/badges";
-import {
-  mockActions,
-  mockReceivablesTrend,
-  mockRiskDistribution,
-} from "@/lib/mock-data";
+import { useLiveInvoices, useLiveReplay, useLiveRisk } from "@/lib/live-data";
 import { formatINR, formatDate } from "@/lib/utils";
 import { Zap, ShieldCheck, FileText } from "lucide-react";
 import Link from "next/link";
@@ -33,11 +29,50 @@ const COLORS = {
 };
 
 export default function DashboardPage() {
-  const pendingReview = mockActions.filter(
+  const {
+    data: invoices = [],
+    isLoading: invoicesLoading,
+    error: invoicesError,
+  } = useLiveInvoices();
+  const {
+    data: actions = [],
+    isLoading: actionsLoading,
+    error: actionsError,
+  } = useLiveReplay();
+  const {
+    data: risks = [],
+    isLoading: risksLoading,
+    error: risksError,
+  } = useLiveRisk();
+  if (invoicesLoading || actionsLoading || risksLoading)
+    return (
+      <div className="text-sm text-muted-foreground">Loading dashboard...</div>
+    );
+  if (invoicesError || actionsError || risksError)
+    return (
+      <div className="text-sm text-red-600">
+        Unable to load dashboard data. Check the backend URL.
+      </div>
+    );
+  const pendingReview = actions.filter(
     (a) => a.status === "awaiting_review",
   ).length;
-  const totalOutstanding = 48_20_000;
-  const totalOverdue = 18_48_500;
+  const totalOutstanding = invoices.reduce(
+    (sum, invoice) => sum + invoice.amountOutstanding,
+    0,
+  );
+  const totalOverdue = invoices
+    .filter((invoice) => invoice.daysOverdue > 0)
+    .reduce((sum, invoice) => sum + invoice.amountOutstanding, 0);
+  const highRisk = risks.filter(
+    (risk) => risk.riskLevel === "HIGH" || risk.riskLevel === "CRITICAL",
+  ).length;
+  const riskDistribution = ["LOW", "MEDIUM", "HIGH", "CRITICAL"].map(
+    (name) => ({
+      name,
+      value: risks.filter((risk) => risk.riskLevel === name).length,
+    }),
+  );
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -65,7 +100,7 @@ export default function DashboardPage() {
         />
         <KpiCard
           label="High Risk"
-          value="8"
+          value={highRisk}
           subLabel="Invoices likely to go late"
           trend="up"
           change="+3"
@@ -73,7 +108,7 @@ export default function DashboardPage() {
         />
         <KpiCard
           label="Agent Actions"
-          value="358"
+          value={actions.length}
           subLabel={`${pendingReview} awaiting approval`}
           trend="neutral"
         />
@@ -93,7 +128,13 @@ export default function DashboardPage() {
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <AreaChart
-              data={mockReceivablesTrend}
+              data={[
+                {
+                  month: "Current",
+                  outstanding: totalOutstanding,
+                  overdue: totalOverdue,
+                },
+              ]}
               margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
             >
               <defs>
@@ -160,7 +201,7 @@ export default function DashboardPage() {
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie
-                data={mockRiskDistribution}
+                data={riskDistribution}
                 cx="50%"
                 cy="50%"
                 innerRadius={55}
@@ -168,7 +209,7 @@ export default function DashboardPage() {
                 paddingAngle={3}
                 dataKey="value"
               >
-                {mockRiskDistribution.map((entry) => (
+                {riskDistribution.map((entry) => (
                   <Cell
                     key={entry.name}
                     fill={COLORS[entry.name as keyof typeof COLORS]}
@@ -201,7 +242,7 @@ export default function DashboardPage() {
           </Link>
         </div>
         <div className="divide-y divide-border">
-          {mockActions.slice(0, 5).map((action) => (
+          {actions.slice(0, 5).map((action) => (
             <div
               key={action.id}
               className="flex items-center gap-4 px-5 py-3.5"

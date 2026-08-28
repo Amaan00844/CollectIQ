@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { mockInvoices, mockActions } from "@/lib/mock-data";
+import { fetchInvoice } from "@/lib/api";
 import {
   StatusBadge,
   RiskBadge,
@@ -21,9 +21,13 @@ export default async function InvoiceDetailPage({
   params: Promise<{ invoiceId: string }>;
 }) {
   const { invoiceId } = await params;
-  const invoice = mockInvoices.find((inv) => inv.id === invoiceId);
-  if (!invoice) return notFound();
-  const relatedActions = mockActions.filter((a) => a.invoiceId === invoice.id);
+  let invoice;
+  try {
+    invoice = await fetchInvoice(invoiceId);
+  } catch {
+    return notFound();
+  }
+  const relatedActions = invoice.actions;
 
   return (
     <div className="max-w-4xl space-y-6 animate-fade-in">

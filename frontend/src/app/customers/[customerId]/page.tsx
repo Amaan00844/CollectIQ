@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { mockCustomers, mockInvoices, mockActions } from "@/lib/mock-data";
+import { fetchCustomer, fetchInvoices, fetchReplay } from "@/lib/api";
 import {
   StatusBadge,
   RiskBadge,
@@ -15,10 +15,40 @@ export default async function CustomerDetailPage({
   params: Promise<{ customerId: string }>;
 }) {
   const { customerId } = await params;
-  const customer = mockCustomers.find((c) => c.id === customerId);
-  if (!customer) return notFound();
-  const invoices = mockInvoices.filter((i) => i.customerId === customer.id);
-  const actions = mockActions.filter((a) => a.customerId === customer.id);
+  let rawCustomer;
+  try {
+    rawCustomer = await fetchCustomer(customerId);
+  } catch {
+    return notFound();
+  }
+  const [allInvoices, allActions] = await Promise.all([
+    fetchInvoices(),
+    fetchReplay(),
+  ]);
+  const customer = {
+    id: rawCustomer.customer_id,
+    name: rawCustomer.customer_name,
+    email: rawCustomer.contact_email,
+    industry: rawCustomer.industry,
+    totalOutstanding: allInvoices
+      .filter((invoice) => invoice.customerId === customerId)
+      .reduce((sum, invoice) => sum + invoice.amountOutstanding, 0),
+    totalOverdue: allInvoices
+      .filter(
+        (invoice) =>
+          invoice.customerId === customerId && invoice.daysOverdue > 0,
+      )
+      .reduce((sum, invoice) => sum + invoice.amountOutstanding, 0),
+    latePaymentRate: 0,
+    avgPaymentDelayDays: 0,
+    risk: "LOW" as const,
+  };
+  const invoices = allInvoices.filter(
+    (invoice) => invoice.customerId === customer.id,
+  );
+  const actions = allActions.filter(
+    (action) => action.customerId === customer.id,
+  );
 
   return (
     <div className="max-w-4xl space-y-6 animate-fade-in">

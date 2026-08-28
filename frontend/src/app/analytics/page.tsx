@@ -13,30 +13,86 @@ import {
   Legend,
 } from "recharts";
 import { PageHeader } from "@/components/shared/page-header";
-import {
-  mockReceivablesTrend,
-  mockRiskDistribution,
-  mockActions,
-} from "@/lib/mock-data";
+import { useLiveInvoices, useLiveReplay, useLiveRisk } from "@/lib/live-data";
 import { formatINR } from "@/lib/utils";
 
-const actionsByTier = [
-  { tier: "Customer", count: 1, auto: 1, manual: 0 },
-  { tier: "Sales", count: 4, auto: 0, manual: 4 },
-  { tier: "Controller", count: 2, auto: 0, manual: 2 },
-  { tier: "CEO", count: 1, auto: 0, manual: 1 },
-  { tier: "Internal", count: 2, auto: 0, manual: 2 },
-];
-
-const riskByCustomer = [
-  { name: "Sunrise Exports", score: 89 },
-  { name: "Metro Infra", score: 71 },
-  { name: "Acme Construction", score: 65 },
-  { name: "Precision Eng", score: 58 },
-  { name: "Bharat Mfg", score: 42 },
-];
-
 export default function AnalyticsPage() {
+  const {
+    data: invoices = [],
+    isLoading: invoicesLoading,
+    error: invoicesError,
+  } = useLiveInvoices();
+  const {
+    data: actions = [],
+    isLoading: actionsLoading,
+    error: actionsError,
+  } = useLiveReplay();
+  const {
+    data: risks = [],
+    isLoading: risksLoading,
+    error: risksError,
+  } = useLiveRisk();
+  if (invoicesLoading || actionsLoading || risksLoading)
+    return (
+      <div className="text-sm text-muted-foreground">Loading analytics...</div>
+    );
+  if (invoicesError || actionsError || risksError)
+    return (
+      <div className="text-sm text-red-600">
+        Unable to load analytics. Check the backend URL.
+      </div>
+    );
+  const totalOutstanding = invoices.reduce(
+    (sum, invoice) => sum + invoice.amountOutstanding,
+    0,
+  );
+  const totalOverdue = invoices
+    .filter((invoice) => invoice.daysOverdue > 0)
+    .reduce((sum, invoice) => sum + invoice.amountOutstanding, 0);
+  const receivablesTrend = [
+    { month: "Current", outstanding: totalOutstanding, overdue: totalOverdue },
+  ];
+  const actionsByTier = Array.from(
+    new Set(actions.map((action) => action.recipientTier)),
+  ).map((tier) => ({
+    tier,
+    count: actions.filter((action) => action.recipientTier === tier).length,
+    auto: actions.filter(
+      (action) =>
+        action.recipientTier === tier && action.deliveryMode === "auto_send",
+    ).length,
+    manual: actions.filter(
+      (action) =>
+        action.recipientTier === tier &&
+        action.deliveryMode === "human_signoff",
+    ).length,
+  }));
+  const riskByCustomer = Array.from(
+    new Set(risks.map((risk) => risk.customerName)),
+  ).map((name) => {
+    const customerRisks = risks.filter((risk) => risk.customerName === name);
+    return {
+      name,
+      score: Math.round(
+        customerRisks.reduce((sum, risk) => sum + risk.riskScore, 0) /
+          customerRisks.length,
+      ),
+    };
+  });
+  const riskDistribution = ["LOW", "MEDIUM", "HIGH", "CRITICAL"].map(
+    (name) => ({
+      name,
+      value: risks.filter((risk) => risk.riskLevel === name).length,
+      color:
+        name === "LOW"
+          ? "#10b981"
+          : name === "MEDIUM"
+            ? "#f59e0b"
+            : name === "HIGH"
+              ? "#ef4444"
+              : "#8b5cf6",
+    }),
+  );
   return (
     <div className="space-y-6 animate-fade-in">
       <PageHeader
@@ -55,7 +111,7 @@ export default function AnalyticsPage() {
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart
-              data={mockReceivablesTrend}
+              data={receivablesTrend}
               margin={{ top: 0, right: 10, left: 0, bottom: 0 }}
             >
               <CartesianGrid
@@ -199,7 +255,7 @@ export default function AnalyticsPage() {
             Breakdown of 11 open invoices by risk level
           </div>
           <div className="space-y-3 mt-4">
-            {mockRiskDistribution.map((d) => (
+            {riskDistribution.map((d) => (
               <div key={d.name} className="flex items-center gap-3">
                 <div className="w-16 text-xs font-medium text-foreground">
                   {d.name}
@@ -208,7 +264,7 @@ export default function AnalyticsPage() {
                   <div
                     className="h-5 flex items-center pl-2 text-[10px] text-white font-semibold transition-all"
                     style={{
-                      width: `${(d.value / 11) * 100}%`,
+                      width: `${risks.length ? (d.value / risks.length) * 100 : 0}%`,
                       backgroundColor: d.color,
                     }}
                   >
@@ -227,13 +283,13 @@ export default function AnalyticsPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-card border border-border rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold">358</div>
+          <div className="text-2xl font-bold">{actions.length}</div>
           <div className="text-xs text-muted-foreground mt-1">
             Replay Actions Total
           </div>
         </div>
         <div className="bg-card border border-border rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-emerald-600">100%</div>
+          <div className="text-2xl font-bold text-emerald-600">N/A</div>
           <div className="text-xs text-muted-foreground mt-1">
             Policy Compliance
           </div>
@@ -245,7 +301,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
         <div className="bg-card border border-border rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold">30</div>
+          <div className="text-2xl font-bold">N/A</div>
           <div className="text-xs text-muted-foreground mt-1">
             Emails Classified by AI
           </div>
