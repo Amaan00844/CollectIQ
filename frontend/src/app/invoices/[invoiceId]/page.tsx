@@ -1,118 +1,108 @@
 'use client'
 
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { mockInvoices, mockActions } from '@/lib/mock-data'
-import { StatusBadge, RiskBadge, DeliveryModeBadge } from '@/components/shared/badges'
+import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
+import { api, ApiInvoiceDetail } from '@/lib/api'
 import { PageHeader } from '@/components/shared/page-header'
-import { formatINRFull, formatDate } from '@/lib/utils'
-import { ArrowLeft, AlertTriangle, MessageSquare, TrendingUp } from 'lucide-react'
+import { StatusBadge, DeliveryModeBadge } from '@/components/shared/badges'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
-export default function InvoiceDetailPage({ params }: { params: { invoiceId: string } }) {
-  const invoice = mockInvoices.find(inv => inv.id === params.invoiceId)
-  if (!invoice) return notFound()
-  const relatedActions = mockActions.filter(a => a.invoiceId === invoice.id)
+function formatINR(n: number) { return '₹' + n.toLocaleString('en-IN') }
+
+export default function InvoiceDetailPage() {
+  const { invoiceId } = useParams<{ invoiceId: string }>()
+  const [inv, setInv] = useState<ApiInvoiceDetail | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (invoiceId) api.invoice(invoiceId).then(setInv).finally(() => setLoading(false))
+  }, [invoiceId])
+
+  if (loading) return <div className="py-16 text-center text-muted-foreground">Loading…</div>
+  if (!inv) return <div className="py-16 text-center text-muted-foreground">Invoice not found.</div>
+
+  const pct = Math.round((inv.total_paid / inv.amount) * 100)
 
   return (
-    <div className="max-w-4xl space-y-6 animate-fade-in">
-      <div className="flex items-center gap-3">
-        <Link href="/invoices" className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-sm">
-          <ArrowLeft className="w-4 h-4" /> Invoices
-        </Link>
-        <span className="text-muted-foreground">/</span>
-        <span className="font-mono text-sm font-semibold text-foreground">{invoice.id}</span>
+    <div className="max-w-3xl space-y-5 animate-fade-in">
+      <Link href="/invoices" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+        <ArrowLeft className="w-4 h-4" /> Back to invoices
+      </Link>
+      <PageHeader title={inv.invoice_id} description={inv.description} />
+
+      {/* Summary */}
+      <div className="bg-card border border-border rounded-lg p-5 grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <div><div className="text-xs text-muted-foreground">Customer</div><div className="font-medium">{inv.customer_name}</div></div>
+        <div><div className="text-xs text-muted-foreground">Amount</div><div className="font-medium">{formatINR(inv.amount)}</div></div>
+        <div><div className="text-xs text-muted-foreground">Status</div><div className="mt-0.5"><StatusBadge status={inv.status as any} /></div></div>
+        <div><div className="text-xs text-muted-foreground">Due Date</div><div className="font-medium">{inv.due_date}</div></div>
+        <div><div className="text-xs text-muted-foreground">Days Overdue</div><div className={`font-medium ${inv.days_overdue > 0 ? 'text-red-600 dark:text-red-400' : 'text-muted-foreground'}`}>{inv.days_overdue > 0 ? `${inv.days_overdue} days` : '—'}</div></div>
+        <div><div className="text-xs text-muted-foreground">Outstanding</div><div className="font-medium">{formatINR(inv.amount_outstanding)}</div></div>
       </div>
 
-      {/* Header card */}
-      <div className="bg-card border border-border rounded-lg p-6">
-        <div className="flex items-start justify-between gap-4 flex-wrap">
-          <div>
-            <div className="font-mono text-xs text-muted-foreground mb-1">{invoice.id}</div>
-            <h1 className="text-xl font-bold text-foreground">{invoice.customerName}</h1>
-            <p className="text-sm text-muted-foreground mt-1">{invoice.description}</p>
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            <StatusBadge status={invoice.status} />
-            <RiskBadge risk={invoice.risk} />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-border">
-          <div>
-            <div className="text-xs text-muted-foreground font-medium">Invoice Amount</div>
-            <div className="text-base font-bold text-foreground mt-1">{formatINRFull(invoice.amount)}</div>
-          </div>
-          <div>
-            <div className="text-xs text-muted-foreground font-medium">Outstanding</div>
-            <div className={`text-base font-bold mt-1 ${invoice.amountOutstanding > 0 ? 'text-red-600 dark:text-red-400' : 'text-emerald-600'}`}>
-              {formatINRFull(invoice.amountOutstanding)}
-            </div>
-          </div>
-          <div>
-            <div className="text-xs text-muted-foreground font-medium">Due Date</div>
-            <div className="text-base font-bold text-foreground mt-1">{formatDate(invoice.dueDate)}</div>
-          </div>
-          <div>
-            <div className="text-xs text-muted-foreground font-medium">Days Overdue</div>
-            <div className={`text-base font-bold mt-1 ${invoice.daysOverdue > 0 ? 'text-red-600 dark:text-red-400' : 'text-emerald-600'}`}>
-              {invoice.daysOverdue > 0 ? `${invoice.daysOverdue} days` : 'On time'}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Risk analysis */}
+      {/* Payment progress */}
       <div className="bg-card border border-border rounded-lg p-5">
-        <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="w-4 h-4 text-foreground" />
-          <h2 className="text-sm font-semibold text-foreground">Risk Analysis</h2>
-          <span className="ml-auto text-2xl font-bold text-foreground">{invoice.riskScore}<span className="text-sm font-normal text-muted-foreground">/100</span></span>
+        <div className="flex justify-between text-sm mb-2">
+          <span className="font-medium">Payment Progress</span>
+          <span className="text-muted-foreground">{formatINR(inv.total_paid)} of {formatINR(inv.amount)}</span>
         </div>
-        <div className="h-2 bg-muted rounded-full mb-4">
-          <div
-            className={`h-2 rounded-full transition-all ${invoice.riskScore >= 85 ? 'bg-purple-500' : invoice.riskScore >= 70 ? 'bg-red-500' : invoice.riskScore >= 50 ? 'bg-amber-500' : 'bg-emerald-500'}`}
-            style={{ width: `${invoice.riskScore}%` }}
-          />
+        <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
         </div>
-        <ul className="space-y-2">
-          {invoice.riskReasons.map((reason, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-foreground">
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-500 mt-0.5 shrink-0" />
-              {reason}
-            </li>
-          ))}
-        </ul>
+        <div className="text-xs text-muted-foreground mt-1">{pct}% paid</div>
       </div>
 
-      {/* Collection history */}
-      <div className="bg-card border border-border rounded-lg">
-        <div className="px-5 py-4 border-b border-border flex items-center gap-2">
-          <MessageSquare className="w-4 h-4 text-foreground" />
-          <h2 className="text-sm font-semibold text-foreground">Collection Actions</h2>
-          <span className="ml-auto text-xs text-muted-foreground">{relatedActions.length} action{relatedActions.length !== 1 ? 's' : ''}</span>
-        </div>
-        {relatedActions.length === 0 ? (
-          <div className="px-5 py-8 text-center text-sm text-muted-foreground">No collection actions for this invoice yet.</div>
-        ) : (
+      {/* Payments */}
+      {inv.payments.length > 0 && (
+        <div className="bg-card border border-border rounded-lg">
+          <div className="px-5 py-3 border-b border-border text-sm font-semibold">Payments Received</div>
           <div className="divide-y divide-border">
-            {relatedActions.map(action => (
-              <div key={action.id} className="px-5 py-4 space-y-2">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <DeliveryModeBadge mode={action.deliveryMode} />
-                  <span className="text-sm font-medium text-foreground capitalize">{action.action.replace(/_/g, ' ')}</span>
-                  <span className="text-xs text-muted-foreground ml-auto">{formatDate(action.date)}</span>
-                </div>
-                <div className="text-xs text-muted-foreground">{action.reason}</div>
-                {action.messageBody && (
-                  <div className="mt-2 text-xs text-foreground bg-muted/40 rounded-md p-3 font-mono whitespace-pre-wrap leading-relaxed">
-                    {action.messageBody}
-                  </div>
-                )}
+            {inv.payments.map((p, i) => (
+              <div key={i} className="px-5 py-3 flex justify-between text-sm">
+                <div><span className="font-medium">{formatINR(p.amount)}</span><span className="text-muted-foreground ml-2">via {p.method}</span></div>
+                <div className="text-muted-foreground">{p.date} · {p.reference}</div>
               </div>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Emails */}
+      {inv.emails.length > 0 && (
+        <div className="bg-card border border-border rounded-lg">
+          <div className="px-5 py-3 border-b border-border text-sm font-semibold">Customer Emails</div>
+          <div className="divide-y divide-border">
+            {inv.emails.map(e => (
+              <div key={e.email_id} className="px-5 py-3">
+                <div className="flex justify-between text-sm">
+                  <span className="font-medium">{e.subject}</span>
+                  <span className="text-muted-foreground">{e.received_date}</span>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{e.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Agent actions */}
+      {inv.actions.length > 0 && (
+        <div className="bg-card border border-border rounded-lg">
+          <div className="px-5 py-3 border-b border-border text-sm font-semibold">Agent Actions ({inv.actions.length})</div>
+          <div className="divide-y divide-border">
+            {inv.actions.slice(0, 15).map((a, i) => (
+              <div key={i} className="px-5 py-3 flex items-center justify-between gap-4">
+                <div>
+                  <div className="text-sm font-medium">{a.action.replace(/_/g, ' ')} → {a.recipient_tier}</div>
+                  <div className="text-xs text-muted-foreground mt-0.5">{a.date} · {a.reason.slice(0, 80)}</div>
+                </div>
+                <DeliveryModeBadge mode={a.delivery_mode as any} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

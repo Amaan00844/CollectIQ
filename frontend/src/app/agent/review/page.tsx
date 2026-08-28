@@ -1,97 +1,67 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { api, ApiAction } from '@/lib/api'
 import { PageHeader } from '@/components/shared/page-header'
-import { RiskBadge } from '@/components/shared/badges'
-import { mockActions } from '@/lib/mock-data'
-import { formatINRFull, formatDate } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Check, X } from 'lucide-react'
 import Link from 'next/link'
-import { Check, X, ShieldCheck } from 'lucide-react'
+
+function formatINR(n: number) { return '₹' + n.toLocaleString('en-IN') }
 
 export default function HumanReviewPage() {
-  const pending = mockActions.filter(a => a.status === 'awaiting_review')
-  const [decisions, setDecisions] = useState<Record<string, 'approved' | 'rejected'>>({})
+  const [actions, setActions] = useState<ApiAction[]>([])
+  const [loading, setLoading] = useState(true)
+  const [approved, setApproved] = useState<Set<number>>(new Set())
+  const [rejected, setRejected] = useState<Set<number>>(new Set())
 
-  const decide = (id: string, decision: 'approved' | 'rejected') => {
-    setDecisions(prev => ({ ...prev, [id]: decision }))
-  }
+  useEffect(() => {
+    api.replay(1000)
+      .then(r => setActions(r.actions.filter(a => a.delivery_mode === 'human_signoff').sort((a, b) => b.date.localeCompare(a.date))))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const pending = actions.filter((_, i) => !approved.has(i) && !rejected.has(i))
 
   return (
     <div className="space-y-4 animate-fade-in">
       <PageHeader
         title="Human Review Queue"
-        description="Actions requiring your approval before the agent proceeds. All escalations and high-value messages are held here."
+        description={`${pending.length} actions awaiting sign-off`}
       />
 
-      <div className="flex items-center gap-3 p-3 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg text-sm text-amber-800 dark:text-amber-300">
-        <ShieldCheck className="w-4 h-4 shrink-0" />
-        <span><strong>{pending.length - Object.keys(decisions).length}</strong> action{pending.length - Object.keys(decisions).length !== 1 ? 's' : ''} pending your review. Agent is paused for these invoices until you approve or reject.</span>
-      </div>
-
-      <div className="space-y-3">
-        {pending.map(action => {
-          const decided = decisions[action.id]
-          return (
-            <div key={action.id} className={`bg-card border rounded-lg overflow-hidden transition-all ${decided === 'approved' ? 'border-emerald-300 dark:border-emerald-800' : decided === 'rejected' ? 'border-red-300 dark:border-red-800 opacity-60' : 'border-border'}`}>
-              <div className="px-5 py-4">
-                <div className="flex items-start justify-between gap-4 flex-wrap">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-xs font-semibold text-primary">{action.invoiceId}</span>
-                      <span className="text-sm font-medium text-foreground">{action.customerName}</span>
-                      <RiskBadge risk={action.riskLevel as 'LOW'|'MEDIUM'|'HIGH'|'CRITICAL'} />
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {formatDate(action.date)} · {formatINRFull(action.amountOutstanding)} outstanding · {action.daysOverdue} days overdue
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      <span className="font-medium text-foreground">Recipient:</span> {action.recipientTier} ·{' '}
-                      <span className="font-medium text-foreground">Rule:</span> {action.policyRule}
-                    </div>
+      {loading ? (
+        <div className="py-16 text-center text-muted-foreground">Loading queue…</div>
+      ) : pending.length === 0 ? (
+        <div className="py-16 text-center text-muted-foreground">All items reviewed.</div>
+      ) : (
+        <div className="space-y-3">
+          {pending.slice(0, 30).map((a, i) => (
+            <div key={i} className="bg-card border border-border rounded-lg p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Link href={`/invoices/${a.invoice_id}`} className="font-mono text-primary hover:underline">{a.invoice_id}</Link>
+                    <span className="font-medium">{a.customer_name}</span>
+                    <span className="text-muted-foreground">·</span>
+                    <span className="text-muted-foreground capitalize">{a.recipient_tier}</span>
                   </div>
-
-                  {!decided ? (
-                    <div className="flex gap-2 shrink-0">
-                      <button onClick={() => decide(action.id, 'rejected')}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-400 text-xs font-medium hover:bg-red-100 dark:hover:bg-red-900 transition-colors">
-                        <X className="w-3.5 h-3.5" /> Reject
-                      </button>
-                      <button onClick={() => decide(action.id, 'approved')}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 text-xs font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900 transition-colors">
-                        <Check className="w-3.5 h-3.5" /> Approve
-                      </button>
-                    </div>
-                  ) : (
-                    <div className={`px-3 py-1.5 rounded-md text-xs font-semibold border ${decided === 'approved' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400' : 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-400'}`}>
-                      {decided === 'approved' ? '✓ Approved' : '✗ Rejected'}
-                    </div>
-                  )}
+                  <div className="text-xs text-muted-foreground mt-1">{a.date} · {formatINR(a.amount_outstanding)} outstanding · {a.days_overdue}d overdue</div>
+                  <div className="text-xs text-muted-foreground mt-1 italic">{a.reason}</div>
                 </div>
-
-                <div className="mt-3 text-xs italic text-muted-foreground">{action.reason}</div>
-
-                {action.messageBody && (
-                  <div className="mt-3 text-xs font-mono whitespace-pre-wrap bg-muted/40 rounded-md p-3 text-foreground leading-relaxed">
-                    {action.messageBody}
-                  </div>
-                )}
-
-                <div className="mt-3 flex items-center gap-3 text-xs text-muted-foreground">
-                  <Link href={`/invoices/${action.invoiceId}`} className="hover:text-primary transition-colors">
-                    View invoice →
-                  </Link>
+                <div className="flex gap-2 shrink-0">
+                  <Button size="sm" variant="outline" className="border-emerald-400 text-emerald-700 hover:bg-emerald-50 dark:text-emerald-400" onClick={() => setApproved(s => new Set([...s, i]))}>
+                    <Check className="w-3.5 h-3.5 mr-1" /> Approve
+                  </Button>
+                  <Button size="sm" variant="outline" className="border-red-400 text-red-600 hover:bg-red-50 dark:text-red-400" onClick={() => setRejected(s => new Set([...s, i]))}>
+                    <X className="w-3.5 h-3.5 mr-1" /> Reject
+                  </Button>
                 </div>
               </div>
+              <pre className="mt-3 whitespace-pre-wrap bg-muted/40 border border-border rounded p-3 text-xs leading-relaxed max-h-36 overflow-auto">{a.message_body}</pre>
             </div>
-          )
-        })}
-      </div>
-
-      {pending.length === 0 && (
-        <div className="py-16 text-center space-y-2">
-          <ShieldCheck className="w-8 h-8 text-emerald-500 mx-auto" />
-          <div className="text-sm font-medium text-foreground">Queue is clear</div>
-          <div className="text-xs text-muted-foreground">No actions pending review</div>
+          ))}
+          {pending.length > 30 && <div className="text-center text-xs text-muted-foreground">Showing 30 of {pending.length}</div>}
         </div>
       )}
     </div>

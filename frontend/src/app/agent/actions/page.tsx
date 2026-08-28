@@ -1,97 +1,70 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { api, ApiAction } from '@/lib/api'
 import { PageHeader } from '@/components/shared/page-header'
-import { DeliveryModeBadge, RiskBadge, ActionStatusBadge } from '@/components/shared/badges'
-import { mockActions } from '@/lib/mock-data'
-import { formatINRFull, formatDate } from '@/lib/utils'
+import { DeliveryModeBadge, RiskBadge } from '@/components/shared/badges'
+import { Input } from '@/components/ui/input'
+import { Search, ChevronDown, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { ChevronDown, ChevronUp } from 'lucide-react'
 
 export default function AgentActionsPage() {
-  const [expanded, setExpanded] = useState<string | null>(null)
-  const [modeFilter, setModeFilter] = useState<'all' | 'auto_send' | 'human_signoff'>('all')
+  const [actions, setActions] = useState<ApiAction[]>([])
+  const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
+  const [expanded, setExpanded] = useState<number | null>(null)
 
-  const actions = mockActions.filter(a => modeFilter === 'all' || a.deliveryMode === modeFilter)
+  useEffect(() => {
+    api.replay(1000).then(r => setActions(r.actions)).finally(() => setLoading(false))
+  }, [])
+
+  const filtered = actions
+    .filter(a => {
+      const q = search.toLowerCase()
+      return !q || a.invoice_id.toLowerCase().includes(q) || a.customer_name.toLowerCase().includes(q) || a.action.includes(q) || a.recipient_tier.includes(q)
+    })
+    .sort((a, b) => b.date.localeCompare(a.date))
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <PageHeader
-        title="AI Agent Actions"
-        description="All collection decisions made by the agent — auto-sent and human-reviewed."
-      />
+      <PageHeader title="Agent Actions" description={`${actions.length} total actions logged across the 18-month replay`} />
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-card border border-border rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-foreground">358</div>
-          <div className="text-xs text-muted-foreground mt-1">Total Actions (18 months)</div>
-        </div>
-        <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-900 rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">1</div>
-          <div className="text-xs text-blue-600 dark:text-blue-500 mt-1">Auto-Sent</div>
-        </div>
-        <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-900 rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-amber-700 dark:text-amber-400">{mockActions.filter(a => a.status === 'awaiting_review').length}</div>
-          <div className="text-xs text-amber-600 dark:text-amber-500 mt-1">Pending Human Review</div>
-        </div>
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Input placeholder="Search by invoice, customer, action…" className="pl-9" value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
-      {/* Filters */}
-      <div className="flex gap-2">
-        {(['all', 'auto_send', 'human_signoff'] as const).map(m => (
-          <button key={m} onClick={() => setModeFilter(m)}
-            className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-colors ${modeFilter === m ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border hover:bg-muted'}`}>
-            {m === 'all' ? 'All Actions' : m === 'auto_send' ? 'Auto-Sent' : 'Human Review'}
-          </button>
-        ))}
-      </div>
-
-      {/* Actions list */}
-      <div className="bg-card border border-border rounded-lg divide-y divide-border">
-        {actions.map(action => (
-          <div key={action.id}>
-            <div
-              className="flex items-center gap-4 px-5 py-3.5 cursor-pointer hover:bg-muted/20 transition-colors"
-              onClick={() => setExpanded(expanded === action.id ? null : action.id)}
-            >
-              <DeliveryModeBadge mode={action.deliveryMode} />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-sm font-medium text-foreground capitalize">{action.action.replace(/_/g, ' ')}</span>
-                  <span className="text-xs text-muted-foreground">→</span>
-                  <span className="text-xs text-muted-foreground capitalize">{action.recipientTier}</span>
-                </div>
-                <div className="text-xs text-muted-foreground mt-0.5">
-                  <Link href={`/invoices/${action.invoiceId}`} className="font-mono hover:text-primary" onClick={e => e.stopPropagation()}>{action.invoiceId}</Link>
-                  {' · '}{action.customerName}{' · '}{formatDate(action.date)}
-                  {' · '}{formatINRFull(action.amountOutstanding)}
-                </div>
+      {loading ? (
+        <div className="py-16 text-center text-muted-foreground">Loading actions…</div>
+      ) : (
+        <div className="bg-card border border-border rounded-lg divide-y divide-border">
+          {filtered.slice(0, 200).map((a, i) => (
+            <div key={i}>
+              <div
+                className="px-5 py-3 flex items-center gap-4 cursor-pointer hover:bg-muted/30"
+                onClick={() => setExpanded(expanded === i ? null : i)}
+              >
+                <span className="text-muted-foreground text-xs w-24 shrink-0">{a.date}</span>
+                <Link href={`/invoices/${a.invoice_id}`} className="font-mono text-xs text-primary hover:underline w-20 shrink-0" onClick={e => e.stopPropagation()}>{a.invoice_id}</Link>
+                <span className="text-sm flex-1 truncate">{a.customer_name}</span>
+                <span className="text-xs text-muted-foreground hidden sm:block w-20 shrink-0">{a.recipient_tier}</span>
+                <RiskBadge level={a.risk_level as any} />
+                <DeliveryModeBadge mode={a.delivery_mode as any} />
+                {expanded === i ? <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" /> : <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0" />}
               </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <RiskBadge risk={action.riskLevel as 'LOW'|'MEDIUM'|'HIGH'|'CRITICAL'} />
-                <ActionStatusBadge status={action.status} />
-                {expanded === action.id ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
-              </div>
+              {expanded === i && (
+                <div className="px-5 pb-4 bg-muted/20 text-xs text-muted-foreground space-y-2">
+                  <div className="font-medium text-foreground">{a.reason}</div>
+                  <pre className="whitespace-pre-wrap bg-card border border-border rounded p-3 text-xs leading-relaxed overflow-auto max-h-60">{a.message_body}</pre>
+                </div>
+              )}
             </div>
-            {expanded === action.id && (
-              <div className="px-5 pb-4 space-y-3 bg-muted/10">
-                <div className="text-xs text-muted-foreground pt-2">
-                  <strong className="text-foreground">Policy rule:</strong> {action.policyRule} ·{' '}
-                  <strong className="text-foreground">Risk score:</strong> {action.riskScore}/100 ·{' '}
-                  <strong className="text-foreground">Days overdue:</strong> {action.daysOverdue}
-                </div>
-                <div className="text-xs text-muted-foreground italic">{action.reason}</div>
-                {action.messageBody && (
-                  <div className="text-xs bg-card border border-border rounded-md p-3 font-mono whitespace-pre-wrap leading-relaxed text-foreground">
-                    {action.messageBody}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+          ))}
+          {filtered.length > 200 && (
+            <div className="px-5 py-3 text-xs text-muted-foreground text-center">Showing 200 of {filtered.length} — use search to filter</div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

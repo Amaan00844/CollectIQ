@@ -1,123 +1,101 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { api, ApiInvoice } from '@/lib/api'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatusBadge, RiskBadge } from '@/components/shared/badges'
-import { mockInvoices } from '@/lib/mock-data'
-import { formatINRFull, formatDate } from '@/lib/utils'
-import { Search, ArrowUpDown, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Search, ArrowUpDown } from 'lucide-react'
+import Link from 'next/link'
 
-const statusOptions = ['all', 'open', 'overdue', 'disputed', 'promise_to_pay', 'paid']
-const riskOptions = ['all', 'CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
+function formatINR(n: number) { return '₹' + n.toLocaleString('en-IN') }
 
 export default function InvoicesPage() {
+  const [invoices, setInvoices] = useState<ApiInvoice[]>([])
+  const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
-  const [riskFilter, setRiskFilter] = useState('all')
-  const [sort, setSort] = useState<{ key: string; dir: 'asc' | 'desc' }>({ key: 'daysOverdue', dir: 'desc' })
+  const [sort, setSort] = useState<'days_overdue' | 'amount' | 'due_date'>('days_overdue')
 
-  let invoices = mockInvoices.filter(inv => {
-    const q = search.toLowerCase()
-    const matchSearch = !q || inv.id.toLowerCase().includes(q) || inv.customerName.toLowerCase().includes(q)
-    const matchStatus = statusFilter === 'all' || inv.status === statusFilter
-    const matchRisk = riskFilter === 'all' || inv.risk === riskFilter
-    return matchSearch && matchStatus && matchRisk
-  })
+  useEffect(() => {
+    api.invoices().then(r => setInvoices(r.invoices)).finally(() => setLoading(false))
+  }, [])
 
-  invoices = [...invoices].sort((a, b) => {
-    let av: number | string = 0, bv: number | string = 0
-    if (sort.key === 'daysOverdue') { av = a.daysOverdue; bv = b.daysOverdue }
-    if (sort.key === 'amount') { av = a.amount; bv = b.amount }
-    if (sort.key === 'riskScore') { av = a.riskScore; bv = b.riskScore }
-    if (sort.key === 'dueDate') { av = a.dueDate; bv = b.dueDate }
-    return sort.dir === 'desc' ? (bv > av ? 1 : -1) : (av > bv ? 1 : -1)
-  })
+  const filtered = invoices
+    .filter(i => {
+      const q = search.toLowerCase()
+      const matchSearch = !q || i.invoice_id.toLowerCase().includes(q) || i.customer_name.toLowerCase().includes(q) || i.description.toLowerCase().includes(q)
+      const matchStatus = statusFilter === 'all' || i.status === statusFilter
+      return matchSearch && matchStatus
+    })
+    .sort((a, b) => {
+      if (sort === 'days_overdue') return b.days_overdue - a.days_overdue
+      if (sort === 'amount') return b.amount_outstanding - a.amount_outstanding
+      return b.due_date.localeCompare(a.due_date)
+    })
 
-  const toggleSort = (key: string) => {
-    setSort(prev => prev.key === key ? { key, dir: prev.dir === 'desc' ? 'asc' : 'desc' } : { key, dir: 'desc' })
-  }
+  const statuses = ['all', 'overdue', 'open', 'partial', 'paid']
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <PageHeader title="All Invoices" description="Track and manage all invoice collection activities." />
+      <PageHeader title="Invoices" description={`${invoices.length} total invoices`} />
 
-      {/* Filters */}
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-2 items-center">
         <div className="relative flex-1 min-w-48">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input placeholder="Search invoices or customers..." className="pl-9 h-9 text-sm" value={search} onChange={e => setSearch(e.target.value)} />
-        </div>
-        <div className="flex gap-1 flex-wrap">
-          {statusOptions.map(s => (
-            <button key={s} onClick={() => setStatusFilter(s)}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-colors capitalize ${statusFilter === s ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border hover:bg-muted'}`}>
-              {s === 'all' ? 'All Status' : s.replace(/_/g, ' ')}
-            </button>
-          ))}
+          <Input placeholder="Search invoices…" className="pl-9" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
         <div className="flex gap-1">
-          {riskOptions.map(r => (
-            <button key={r} onClick={() => setRiskFilter(r)}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-colors capitalize ${riskFilter === r ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border hover:bg-muted'}`}>
-              {r === 'all' ? 'All Risk' : r}
-            </button>
+          {statuses.map(s => (
+            <Button key={s} variant={statusFilter === s ? 'default' : 'outline'} size="sm" onClick={() => setStatusFilter(s)}>
+              {s === 'all' ? 'All' : s.charAt(0).toUpperCase() + s.slice(1)}
+            </Button>
           ))}
         </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-card border border-border rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
+      {loading ? (
+        <div className="text-center py-16 text-muted-foreground">Loading invoices…</div>
+      ) : (
+        <div className="bg-card border border-border rounded-lg overflow-hidden">
           <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-muted/30">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Invoice</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Customer</th>
-                <th className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide cursor-pointer" onClick={() => toggleSort('amount')}>
-                  <div className="flex items-center gap-1">Amount <ArrowUpDown className="w-3 h-3" /></div>
-                </th>
-                <th className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide cursor-pointer" onClick={() => toggleSort('dueDate')}>
-                  <div className="flex items-center gap-1">Due Date <ArrowUpDown className="w-3 h-3" /></div>
-                </th>
-                <th className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Status</th>
-                <th className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide cursor-pointer" onClick={() => toggleSort('daysOverdue')}>
-                  <div className="flex items-center gap-1">Days OD <ArrowUpDown className="w-3 h-3" /></div>
-                </th>
-                <th className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide cursor-pointer" onClick={() => toggleSort('riskScore')}>
-                  <div className="flex items-center gap-1">Risk <ArrowUpDown className="w-3 h-3" /></div>
-                </th>
-                <th className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide"></th>
+            <thead className="bg-muted/50 border-b border-border">
+              <tr>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Invoice</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Customer</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Amount</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground cursor-pointer" onClick={() => setSort('due_date')}>Due Date</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground cursor-pointer" onClick={() => setSort('days_overdue')}>Overdue</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Status</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Outstanding</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {invoices.map(inv => (
-                <tr key={inv.id} className="hover:bg-muted/20 transition-colors">
-                  <td className="px-4 py-3 font-mono text-xs text-primary font-semibold">{inv.id}</td>
-                  <td className="px-4 py-3 text-sm text-foreground font-medium">{inv.customerName}</td>
-                  <td className="px-4 py-3 text-sm font-semibold text-foreground">{formatINRFull(inv.amountOutstanding)}</td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground">{formatDate(inv.dueDate)}</td>
-                  <td className="px-4 py-3"><StatusBadge status={inv.status} /></td>
-                  <td className="px-4 py-3 text-sm font-medium">
-                    {inv.daysOverdue > 0 ? <span className="text-red-600 dark:text-red-400">{inv.daysOverdue}d</span> : <span className="text-muted-foreground">—</span>}
-                  </td>
-                  <td className="px-4 py-3"><RiskBadge risk={inv.risk} /></td>
+              {filtered.map(inv => (
+                <tr key={inv.invoice_id} className="hover:bg-muted/30 transition-colors">
                   <td className="px-4 py-3">
-                    <Link href={`/invoices/${inv.id}`} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors">
-                      View <ChevronRight className="w-3 h-3" />
-                    </Link>
+                    <Link href={`/invoices/${inv.invoice_id}`} className="font-mono text-primary hover:underline">{inv.invoice_id}</Link>
                   </td>
+                  <td className="px-4 py-3 font-medium">{inv.customer_name}</td>
+                  <td className="px-4 py-3">{formatINR(inv.amount)}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{inv.due_date}</td>
+                  <td className="px-4 py-3">
+                    {inv.days_overdue > 0 ? (
+                      <span className={`font-medium ${inv.days_overdue > 30 ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>
+                        {inv.days_overdue}d
+                      </span>
+                    ) : <span className="text-muted-foreground">—</span>}
+                  </td>
+                  <td className="px-4 py-3"><StatusBadge status={inv.status as any} /></td>
+                  <td className="px-4 py-3 font-medium">{inv.amount_outstanding > 0 ? formatINR(inv.amount_outstanding) : '—'}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {filtered.length === 0 && <div className="text-center py-12 text-muted-foreground">No invoices match your filters.</div>}
         </div>
-        <div className="px-4 py-3 border-t border-border text-xs text-muted-foreground">
-          Showing {invoices.length} of {mockInvoices.length} invoices
-        </div>
-      </div>
+      )}
     </div>
   )
 }
