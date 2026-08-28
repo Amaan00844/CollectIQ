@@ -26,7 +26,7 @@ export default function ReplayPage() {
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <PageHeader title="Replay Timeline" description={`${actions.length} actions across 18 months — point-in-time simulation`} />
+      <PageHeader title="Replay Timeline" description={`${actions.length} simulated actions across 18 months — no emails were sent`} />
 
       <div className="space-y-6">
         {Object.entries(byMonth).sort().reverse().map(([month, acts]) => (

@@ -42,13 +42,13 @@ export function DeliveryModeBadge({ mode }: { mode: DeliveryMode }) {
   if (mode === 'auto_send') {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-950 dark:text-blue-400 dark:border-blue-900">
-        AUTO-SEND
+        SIMULATED AUTO-SEND
       </span>
     )
   }
   return (
     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950 dark:text-amber-400 dark:border-amber-900">
-      HUMAN REVIEW
+      SIMULATED HUMAN REVIEW
     </span>
   )
 }

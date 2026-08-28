@@ -3,6 +3,8 @@
  * Reads NEXT_PUBLIC_API_URL from env (falls back to localhost:8000).
  */
 
+import type { Policy } from '@/types'
+
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'
 
 async function get<T>(path: string): Promise<T> {
@@ -39,7 +41,6 @@ export interface ApiCustomer {
   customer_name: string
   contact_email: string
   industry: string
-  credit_limit: number
   payment_terms_days: number
   open_invoices: number
   open_invoice_ids: string[]
@@ -111,7 +112,7 @@ export const api = {
 
   risk: () => get<ApiRiskItem[]>('/risk'),
 
-  policy: () => get<Record<string, unknown>>('/policy'),
+  policy: () => get<Policy>('/policy'),
 
   triggerRun: () =>
     fetch(`${BASE}/run`, { method: 'POST' }).then(r => r.json()),

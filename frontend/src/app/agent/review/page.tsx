@@ -27,8 +27,12 @@ export default function HumanReviewPage() {
     <div className="space-y-4 animate-fade-in">
       <PageHeader
         title="Human Review Queue"
-        description={`${pending.length} actions awaiting sign-off`}
+        description={`${pending.length} simulated actions awaiting sign-off`}
       />
+
+      <div className="p-3 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-900 rounded-lg text-xs text-blue-700 dark:text-blue-300">
+        Simulation only: Approve and Reject update this replay view. No customer email is sent.
+      </div>
 
       {loading ? (
         <div className="py-16 text-center text-muted-foreground">Loading queue…</div>
@@ -51,10 +55,10 @@ export default function HumanReviewPage() {
                 </div>
                 <div className="flex gap-2 shrink-0">
                   <Button size="sm" variant="outline" className="border-emerald-400 text-emerald-700 hover:bg-emerald-50 dark:text-emerald-400" onClick={() => setApproved(s => new Set([...s, i]))}>
-                    <Check className="w-3.5 h-3.5 mr-1" /> Approve
+                    <Check className="w-3.5 h-3.5 mr-1" /> Approve Simulation
                   </Button>
                   <Button size="sm" variant="outline" className="border-red-400 text-red-600 hover:bg-red-50 dark:text-red-400" onClick={() => setRejected(s => new Set([...s, i]))}>
-                    <X className="w-3.5 h-3.5 mr-1" /> Reject
+                    <X className="w-3.5 h-3.5 mr-1" /> Reject Simulation
                   </Button>
                 </div>
               </div>
