@@ -6,10 +6,11 @@ AI-powered accounts receivable collections automation. Simulates a back-office c
 
 ```
 Historical Data (CSV)
-  ├── invoices.csv       18 months, 100 invoices, 12 customers
-  ├── payments.csv       89 payments (11 open invoices)
-  ├── customers.csv      12 customers with full contact hierarchy
-  └── emails.csv         30 inbound customer emails
+  ├── invoices.csv       18 months, 432 invoices, 12 customers
+  ├── payments.csv       403 payment records
+  ├── customers.csv      12 customers with contractual payment terms
+  ├── contacts.csv       Customer and provider contact hierarchy
+  └── inbound_replies/   20 inbound customer email replies
 
         LLM mode      : NVIDIA NIM (google/gemma-2-27b-it)
   Replay Engine (src/replay.py)
@@ -58,6 +59,7 @@ python main.py
 ```
 
 Expected output:
+
 ```
 output/replay_log.jsonl   — All actions across 18 months (JSONL format)
 output/risk_report.json   — Risk assessments for open invoices
@@ -74,6 +76,7 @@ Tests cover: paid invoice (no action), overdue reminder, promise-to-pay pause, b
 ## Output Format
 
 ### replay_log.jsonl
+
 ```json
 {
   "date": "2024-02-05",
@@ -94,6 +97,7 @@ Tests cover: paid invoice (no action), overdue reminder, promise-to-pay pause, b
 ```
 
 ### risk_report.json
+
 ```json
 [
   {

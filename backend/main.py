@@ -31,6 +31,9 @@ from src.data_loader import CollectionsData
 from src.replay import run_replay, generate_risk_report, load_policy
 from src.logger import write_risk_report
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 OUTPUT_DIR = Path(__file__).parent / "output"
 RISK_REPORT_PATH = OUTPUT_DIR / "risk_report.json"
 REPLAY_LOG_PATH = OUTPUT_DIR / "replay_log.jsonl"
@@ -57,7 +60,7 @@ def print_summary(action_count: int, risk_report: list[dict]):
     total_exposure = sum(r["amount_outstanding"] for r in risk_report)
 
     print(f"  High/critical risk   : {len(high_risk)}")
-    print(f"  Total open exposure  : INR {total_exposure:,.0f}")
+    print(f"  Total open exposure  : {total_exposure:,.0f} (pack currency)")
 
     print()
     print(f"  Output files:")

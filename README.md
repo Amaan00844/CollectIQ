@@ -20,7 +20,7 @@ uvicorn api:app --reload      # starts REST API on :8000
 cd frontend
 npm install
 # set NEXT_PUBLIC_API_URL in .env.local
-npm run dev                   # http://localhost:3001
+npm run dev                   # http://localhost:3001 or http://localhost:3000
 ```
 
 ---

@@ -1,26 +1,181 @@
 [
   {
-    "invoice_id": "INV-091",
-    "customer_id": "CUST-009",
-    "customer_name": "Sunrise Exports Ltd",
-    "amount": 580000.0,
-    "amount_outstanding": 580000.0,
-    "due_date": "2025-02-06",
-    "days_overdue": 42,
+    "invoice_id": "INV-2177",
+    "customer_id": "C-05",
+    "customer_name": "Ardley & Sons",
+    "amount": 314.14,
+    "amount_outstanding": 314.14,
+    "due_date": "2026-07-13",
+    "days_overdue": 100,
     "risk_level": "HIGH",
-    "risk_score": 52.3,
+    "risk_score": 62.5,
     "reasons": [
-      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
-      "Average payment delay: 22 days late across historical invoices",
-      "Current invoice is 42 days overdue (seriously past due)",
-      "3 payment reminders sent with no response — customer non-responsive",
-      "Recent payment behavior is worsening compared to historical average",
-      "Invoice amount ₹580,000 is above the high-value threshold"
+      "Customer historically pays late: 14 of 14 past invoices were overdue (100%)",
+      "Average payment delay: 70 days late across historical invoices",
+      "Current invoice is 100 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
     ],
     "features": {
       "historical_late_rate": 100.0,
-      "avg_days_late": 21.77777777777778,
-      "current_overdue_days": 42.0,
+      "avg_days_late": 70.5,
+      "current_overdue_days": 100.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2178",
+    "customer_id": "C-05",
+    "customer_name": "Ardley & Sons",
+    "amount": 269.57,
+    "amount_outstanding": 269.57,
+    "due_date": "2026-08-04",
+    "days_overdue": 78,
+    "risk_level": "HIGH",
+    "risk_score": 59.0,
+    "reasons": [
+      "Customer historically pays late: 14 of 14 past invoices were overdue (100%)",
+      "Average payment delay: 70 days late across historical invoices",
+      "Current invoice is 78 days overdue (seriously past due)",
+      "2 payment reminder(s) already sent for this invoice"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 70.5,
+      "current_overdue_days": 78.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 2.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2356",
+    "customer_id": "C-10",
+    "customer_name": "Thackeray Advisory",
+    "amount": 18989.52,
+    "amount_outstanding": 18989.52,
+    "due_date": "2026-07-21",
+    "days_overdue": 92,
+    "risk_level": "HIGH",
+    "risk_score": 56.4,
+    "reasons": [
+      "Customer historically pays late: 31 of 31 past invoices were overdue (100%)",
+      "Average payment delay: 36 days late across historical invoices",
+      "Current invoice is 92 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 35.70967741935484,
+      "current_overdue_days": 92.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2235",
+    "customer_id": "C-07",
+    "customer_name": "Saltmarsh Media",
+    "amount": 4732.47,
+    "amount_outstanding": 9.094947017729282e-13,
+    "due_date": "2025-04-11",
+    "days_overdue": 558,
+    "risk_level": "HIGH",
+    "risk_score": 52.7,
+    "reasons": [
+      "Customer historically pays late: 31 of 31 past invoices were overdue (100%)",
+      "Average payment delay: 21 days late across historical invoices",
+      "Current invoice is 558 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 20.64516129032258,
+      "current_overdue_days": 558.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2236",
+    "customer_id": "C-07",
+    "customer_name": "Saltmarsh Media",
+    "amount": 6290.89,
+    "amount_outstanding": 9.094947017729282e-13,
+    "due_date": "2025-03-31",
+    "days_overdue": 569,
+    "risk_level": "HIGH",
+    "risk_score": 52.7,
+    "reasons": [
+      "Customer historically pays late: 31 of 31 past invoices were overdue (100%)",
+      "Average payment delay: 21 days late across historical invoices",
+      "Current invoice is 569 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 20.741935483870968,
+      "current_overdue_days": 569.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2087",
+    "customer_id": "C-02",
+    "customer_name": "Cormack Retail Group",
+    "amount": 9952.53,
+    "amount_outstanding": 9952.53,
+    "due_date": "2026-08-01",
+    "days_overdue": 81,
+    "risk_level": "HIGH",
+    "risk_score": 51.7,
+    "reasons": [
+      "Customer historically pays late: 48 of 48 past invoices were overdue (100%)",
+      "Average payment delay: 25 days late across historical invoices",
+      "Current invoice is 81 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 24.9375,
+      "current_overdue_days": 81.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2122",
+    "customer_id": "C-03",
+    "customer_name": "Perrin Life Sciences",
+    "amount": 24731.97,
+    "amount_outstanding": 24731.97,
+    "due_date": "2026-07-28",
+    "days_overdue": 85,
+    "risk_level": "HIGH",
+    "risk_score": 50.4,
+    "reasons": [
+      "Customer has moderate late-payment history: 16 of 30 invoices paid late",
+      "Average payment delay: 23 days late across historical invoices",
+      "Current invoice is 85 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Recent payment behavior is worsening compared to historical average"
+    ],
+    "features": {
+      "historical_late_rate": 53.333333333333336,
+      "avg_days_late": 22.625,
+      "current_overdue_days": 85.0,
       "broken_promises": 0.0,
       "previous_disputes": 0.0,
       "reminders_sent": 3.0,
@@ -28,25 +183,102 @@
     }
   },
   {
-    "invoice_id": "INV-093",
-    "customer_id": "CUST-001",
-    "customer_name": "Acme Construction Ltd",
-    "amount": 310000.0,
-    "amount_outstanding": 310000.0,
-    "due_date": "2025-01-11",
-    "days_overdue": 68,
+    "invoice_id": "INV-2179",
+    "customer_id": "C-05",
+    "customer_name": "Ardley & Sons",
+    "amount": 245.1,
+    "amount_outstanding": 245.1,
+    "due_date": "2026-09-18",
+    "days_overdue": 33,
     "risk_level": "MEDIUM",
-    "risk_score": 46.5,
+    "risk_score": 49.8,
     "reasons": [
-      "Customer historically pays late: 11 of 11 past invoices were overdue (100%)",
-      "Moderate average payment delay: 16 days",
-      "Current invoice is 68 days overdue (seriously past due)",
-      "3 payment reminders sent with no response — customer non-responsive",
-      "Invoice amount ₹310,000 is above the high-value threshold"
+      "Customer historically pays late: 14 of 14 past invoices were overdue (100%)",
+      "Average payment delay: 70 days late across historical invoices",
+      "Current invoice is 33 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
     ],
     "features": {
       "historical_late_rate": 100.0,
-      "avg_days_late": 15.545454545454545,
+      "avg_days_late": 70.5,
+      "current_overdue_days": 33.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2267",
+    "customer_id": "C-07",
+    "customer_name": "Saltmarsh Media",
+    "amount": 7101.18,
+    "amount_outstanding": 7101.18,
+    "due_date": "2026-08-06",
+    "days_overdue": 76,
+    "risk_level": "MEDIUM",
+    "risk_score": 49.6,
+    "reasons": [
+      "Customer historically pays late: 32 of 32 past invoices were overdue (100%)",
+      "Average payment delay: 21 days late across historical invoices",
+      "Current invoice is 76 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 20.78125,
+      "current_overdue_days": 76.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2085",
+    "customer_id": "C-02",
+    "customer_name": "Cormack Retail Group",
+    "amount": 10664.57,
+    "amount_outstanding": 10664.57,
+    "due_date": "2026-08-12",
+    "days_overdue": 70,
+    "risk_level": "MEDIUM",
+    "risk_score": 49.3,
+    "reasons": [
+      "Customer historically pays late: 48 of 48 past invoices were overdue (100%)",
+      "Average payment delay: 25 days late across historical invoices",
+      "Current invoice is 70 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 24.9375,
+      "current_overdue_days": 70.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2086",
+    "customer_id": "C-02",
+    "customer_name": "Cormack Retail Group",
+    "amount": 8797.11,
+    "amount_outstanding": 8797.11,
+    "due_date": "2026-08-14",
+    "days_overdue": 68,
+    "risk_level": "MEDIUM",
+    "risk_score": 48.8,
+    "reasons": [
+      "Customer historically pays late: 48 of 48 past invoices were overdue (100%)",
+      "Average payment delay: 25 days late across historical invoices",
+      "Current invoice is 68 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 24.9375,
       "current_overdue_days": 68.0,
       "broken_promises": 0.0,
       "previous_disputes": 0.0,
@@ -55,79 +287,24 @@
     }
   },
   {
-    "invoice_id": "INV-090",
-    "customer_id": "CUST-010",
-    "customer_name": "Metro Infra Projects",
-    "amount": 510000.0,
-    "amount_outstanding": 510000.0,
-    "due_date": "2025-01-17",
-    "days_overdue": 62,
-    "risk_level": "MEDIUM",
-    "risk_score": 46.4,
-    "reasons": [
-      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
-      "Average payment delay: 21 days late across historical invoices",
-      "Current invoice is 62 days overdue (seriously past due)",
-      "3 payment reminders sent with no response — customer non-responsive",
-      "Invoice amount ₹510,000 is above the high-value threshold"
-    ],
-    "features": {
-      "historical_late_rate": 100.0,
-      "avg_days_late": 20.555555555555557,
-      "current_overdue_days": 62.0,
-      "broken_promises": 0.0,
-      "previous_disputes": 0.0,
-      "reminders_sent": 3.0,
-      "worsening_behavior": 0.0
-    }
-  },
-  {
-    "invoice_id": "INV-092",
-    "customer_id": "CUST-002",
-    "customer_name": "Bharat Manufacturing Co",
-    "amount": 425000.0,
-    "amount_outstanding": 425000.0,
-    "due_date": "2025-01-24",
-    "days_overdue": 55,
-    "risk_level": "MEDIUM",
-    "risk_score": 44.6,
-    "reasons": [
-      "Customer historically pays late: 10 of 10 past invoices were overdue (100%)",
-      "Moderate average payment delay: 19 days",
-      "Current invoice is 55 days overdue (seriously past due)",
-      "3 payment reminders sent with no response — customer non-responsive",
-      "Invoice amount ₹425,000 is above the high-value threshold"
-    ],
-    "features": {
-      "historical_late_rate": 100.0,
-      "avg_days_late": 19.4,
-      "current_overdue_days": 55.0,
-      "broken_promises": 0.0,
-      "previous_disputes": 0.0,
-      "reminders_sent": 3.0,
-      "worsening_behavior": 0.0
-    }
-  },
-  {
-    "invoice_id": "INV-094",
-    "customer_id": "CUST-006",
-    "customer_name": "Precision Engineers Ltd",
-    "amount": 380000.0,
-    "amount_outstanding": 380000.0,
-    "due_date": "2025-01-29",
+    "invoice_id": "INV-2357",
+    "customer_id": "C-10",
+    "customer_name": "Thackeray Advisory",
+    "amount": 13915.41,
+    "amount_outstanding": 13915.41,
+    "due_date": "2026-09-01",
     "days_overdue": 50,
     "risk_level": "MEDIUM",
-    "risk_score": 42.6,
+    "risk_score": 47.5,
     "reasons": [
-      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
-      "Moderate average payment delay: 16 days",
+      "Customer historically pays late: 31 of 31 past invoices were overdue (100%)",
+      "Average payment delay: 36 days late across historical invoices",
       "Current invoice is 50 days overdue (seriously past due)",
-      "3 payment reminders sent with no response — customer non-responsive",
-      "Invoice amount ₹380,000 is above the high-value threshold"
+      "3 payment reminders sent with no response — customer non-responsive"
     ],
     "features": {
       "historical_late_rate": 100.0,
-      "avg_days_late": 16.0,
+      "avg_days_late": 35.70967741935484,
       "current_overdue_days": 50.0,
       "broken_promises": 0.0,
       "previous_disputes": 0.0,
@@ -136,26 +313,130 @@
     }
   },
   {
-    "invoice_id": "INV-096",
-    "customer_id": "CUST-009",
-    "customer_name": "Sunrise Exports Ltd",
-    "amount": 630000.0,
-    "amount_outstanding": 630000.0,
-    "due_date": "2025-03-11",
-    "days_overdue": 9,
+    "invoice_id": "INV-2268",
+    "customer_id": "C-07",
+    "customer_name": "Saltmarsh Media",
+    "amount": 6768.87,
+    "amount_outstanding": 6768.87,
+    "due_date": "2026-08-20",
+    "days_overdue": 62,
     "risk_level": "MEDIUM",
-    "risk_score": 42.4,
+    "risk_score": 46.5,
     "reasons": [
-      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
-      "Average payment delay: 22 days late across historical invoices",
-      "Current invoice is 9 day(s) overdue",
-      "Recent payment behavior is worsening compared to historical average",
-      "Invoice amount ₹630,000 is above the high-value threshold"
+      "Customer historically pays late: 32 of 32 past invoices were overdue (100%)",
+      "Average payment delay: 21 days late across historical invoices",
+      "Current invoice is 62 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
     ],
     "features": {
       "historical_late_rate": 100.0,
-      "avg_days_late": 21.77777777777778,
-      "current_overdue_days": 9.0,
+      "avg_days_late": 20.78125,
+      "current_overdue_days": 62.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2358",
+    "customer_id": "C-10",
+    "customer_name": "Thackeray Advisory",
+    "amount": 15098.72,
+    "amount_outstanding": 15098.72,
+    "due_date": "2026-09-08",
+    "days_overdue": 43,
+    "risk_level": "MEDIUM",
+    "risk_score": 46.0,
+    "reasons": [
+      "Customer historically pays late: 31 of 31 past invoices were overdue (100%)",
+      "Average payment delay: 36 days late across historical invoices",
+      "Current invoice is 43 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 35.70967741935484,
+      "current_overdue_days": 43.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2124",
+    "customer_id": "C-03",
+    "customer_name": "Perrin Life Sciences",
+    "amount": 37685.06,
+    "amount_outstanding": 37685.06,
+    "due_date": "2026-08-19",
+    "days_overdue": 63,
+    "risk_level": "MEDIUM",
+    "risk_score": 45.5,
+    "reasons": [
+      "Customer has moderate late-payment history: 16 of 30 invoices paid late",
+      "Average payment delay: 23 days late across historical invoices",
+      "Current invoice is 63 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Recent payment behavior is worsening compared to historical average"
+    ],
+    "features": {
+      "historical_late_rate": 53.333333333333336,
+      "avg_days_late": 22.625,
+      "current_overdue_days": 63.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 1.0
+    }
+  },
+  {
+    "invoice_id": "INV-2090",
+    "customer_id": "C-02",
+    "customer_name": "Cormack Retail Group",
+    "amount": 7159.84,
+    "amount_outstanding": 7159.84,
+    "due_date": "2026-08-31",
+    "days_overdue": 51,
+    "risk_level": "MEDIUM",
+    "risk_score": 45.1,
+    "reasons": [
+      "Customer historically pays late: 48 of 48 past invoices were overdue (100%)",
+      "Average payment delay: 25 days late across historical invoices",
+      "Current invoice is 51 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 24.9375,
+      "current_overdue_days": 51.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2121",
+    "customer_id": "C-03",
+    "customer_name": "Perrin Life Sciences",
+    "amount": 31165.01,
+    "amount_outstanding": 31165.01,
+    "due_date": "2026-08-11",
+    "days_overdue": 71,
+    "risk_level": "MEDIUM",
+    "risk_score": 44.8,
+    "reasons": [
+      "Customer has moderate late-payment history: 16 of 30 invoices paid late",
+      "Average payment delay: 23 days late across historical invoices",
+      "Current invoice is 71 days overdue (seriously past due)",
+      "Recent payment behavior is worsening compared to historical average"
+    ],
+    "features": {
+      "historical_late_rate": 53.333333333333336,
+      "avg_days_late": 22.625,
+      "current_overdue_days": 71.0,
       "broken_promises": 0.0,
       "previous_disputes": 0.0,
       "reminders_sent": 0.0,
@@ -163,25 +444,206 @@
     }
   },
   {
-    "invoice_id": "INV-095",
-    "customer_id": "CUST-010",
-    "customer_name": "Metro Infra Projects",
-    "amount": 495000.0,
-    "amount_outstanding": 495000.0,
-    "due_date": "2025-02-20",
-    "days_overdue": 28,
+    "invoice_id": "INV-2089",
+    "customer_id": "C-02",
+    "customer_name": "Cormack Retail Group",
+    "amount": 9977.71,
+    "amount_outstanding": 9977.71,
+    "due_date": "2026-09-02",
+    "days_overdue": 49,
     "risk_level": "MEDIUM",
-    "risk_score": 38.9,
+    "risk_score": 44.6,
     "reasons": [
-      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
-      "Average payment delay: 21 days late across historical invoices",
-      "Current invoice is 28 days overdue",
-      "3 payment reminders sent with no response — customer non-responsive",
-      "Invoice amount ₹495,000 is above the high-value threshold"
+      "Customer historically pays late: 48 of 48 past invoices were overdue (100%)",
+      "Average payment delay: 25 days late across historical invoices",
+      "Current invoice is 49 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
     ],
     "features": {
       "historical_late_rate": 100.0,
-      "avg_days_late": 20.555555555555557,
+      "avg_days_late": 24.9375,
+      "current_overdue_days": 49.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2287",
+    "customer_id": "C-08",
+    "customer_name": "Kesteven Industrial",
+    "amount": 72054.53,
+    "amount_outstanding": 72054.53,
+    "due_date": "2026-08-27",
+    "days_overdue": 55,
+    "risk_level": "MEDIUM",
+    "risk_score": 43.5,
+    "reasons": [
+      "Customer historically pays late: 16 of 16 past invoices were overdue (100%)",
+      "Moderate average payment delay: 15 days",
+      "Current invoice is 55 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 15.0625,
+      "current_overdue_days": 55.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2269",
+    "customer_id": "C-07",
+    "customer_name": "Saltmarsh Media",
+    "amount": 6440.05,
+    "amount_outstanding": 6440.05,
+    "due_date": "2026-09-05",
+    "days_overdue": 46,
+    "risk_level": "MEDIUM",
+    "risk_score": 42.9,
+    "reasons": [
+      "Customer historically pays late: 32 of 32 past invoices were overdue (100%)",
+      "Average payment delay: 21 days late across historical invoices",
+      "Current invoice is 46 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 20.78125,
+      "current_overdue_days": 46.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2180",
+    "customer_id": "C-05",
+    "customer_name": "Ardley & Sons",
+    "amount": 329.62,
+    "amount_outstanding": 329.62,
+    "due_date": "2026-10-21",
+    "days_overdue": 0,
+    "risk_level": "MEDIUM",
+    "risk_score": 42.5,
+    "reasons": [
+      "Customer historically pays late: 14 of 14 past invoices were overdue (100%)",
+      "Average payment delay: 70 days late across historical invoices",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 70.5,
+      "current_overdue_days": 0.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2360",
+    "customer_id": "C-10",
+    "customer_name": "Thackeray Advisory",
+    "amount": 13046.71,
+    "amount_outstanding": 13046.71,
+    "due_date": "2026-09-25",
+    "days_overdue": 26,
+    "risk_level": "MEDIUM",
+    "risk_score": 42.2,
+    "reasons": [
+      "Customer historically pays late: 31 of 31 past invoices were overdue (100%)",
+      "Average payment delay: 36 days late across historical invoices",
+      "Current invoice is 26 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 35.70967741935484,
+      "current_overdue_days": 26.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2123",
+    "customer_id": "C-03",
+    "customer_name": "Perrin Life Sciences",
+    "amount": 34814.46,
+    "amount_outstanding": 34814.46,
+    "due_date": "2026-09-04",
+    "days_overdue": 47,
+    "risk_level": "MEDIUM",
+    "risk_score": 41.9,
+    "reasons": [
+      "Customer has moderate late-payment history: 16 of 30 invoices paid late",
+      "Average payment delay: 23 days late across historical invoices",
+      "Current invoice is 47 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Recent payment behavior is worsening compared to historical average"
+    ],
+    "features": {
+      "historical_late_rate": 53.333333333333336,
+      "avg_days_late": 22.625,
+      "current_overdue_days": 47.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 1.0
+    }
+  },
+  {
+    "invoice_id": "INV-2270",
+    "customer_id": "C-07",
+    "customer_name": "Saltmarsh Media",
+    "amount": 7288.97,
+    "amount_outstanding": 7288.97,
+    "due_date": "2026-09-15",
+    "days_overdue": 36,
+    "risk_level": "MEDIUM",
+    "risk_score": 40.7,
+    "reasons": [
+      "Customer historically pays late: 32 of 32 past invoices were overdue (100%)",
+      "Average payment delay: 21 days late across historical invoices",
+      "Current invoice is 36 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 20.78125,
+      "current_overdue_days": 36.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2088",
+    "customer_id": "C-02",
+    "customer_name": "Cormack Retail Group",
+    "amount": 8810.58,
+    "amount_outstanding": 8810.58,
+    "due_date": "2026-09-23",
+    "days_overdue": 28,
+    "risk_level": "MEDIUM",
+    "risk_score": 40.0,
+    "reasons": [
+      "Customer historically pays late: 48 of 48 past invoices were overdue (100%)",
+      "Average payment delay: 25 days late across historical invoices",
+      "Current invoice is 28 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 100.0,
+      "avg_days_late": 24.9375,
       "current_overdue_days": 28.0,
       "broken_promises": 0.0,
       "previous_disputes": 0.0,
@@ -190,26 +652,25 @@
     }
   },
   {
-    "invoice_id": "INV-098",
-    "customer_id": "CUST-001",
-    "customer_name": "Acme Construction Ltd",
-    "amount": 340000.0,
-    "amount_outstanding": 340000.0,
-    "due_date": "2025-02-17",
-    "days_overdue": 31,
+    "invoice_id": "INV-2359",
+    "customer_id": "C-10",
+    "customer_name": "Thackeray Advisory",
+    "amount": 10049.4,
+    "amount_outstanding": 10049.4,
+    "due_date": "2026-10-05",
+    "days_overdue": 16,
     "risk_level": "MEDIUM",
-    "risk_score": 38.3,
+    "risk_score": 40.0,
     "reasons": [
-      "Customer historically pays late: 11 of 11 past invoices were overdue (100%)",
-      "Moderate average payment delay: 16 days",
-      "Current invoice is 31 days overdue (seriously past due)",
-      "3 payment reminders sent with no response — customer non-responsive",
-      "Invoice amount ₹340,000 is above the high-value threshold"
+      "Customer historically pays late: 31 of 31 past invoices were overdue (100%)",
+      "Average payment delay: 36 days late across historical invoices",
+      "Current invoice is 16 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
     ],
     "features": {
       "historical_late_rate": 100.0,
-      "avg_days_late": 15.545454545454545,
-      "current_overdue_days": 31.0,
+      "avg_days_late": 35.70967741935484,
+      "current_overdue_days": 16.0,
       "broken_promises": 0.0,
       "previous_disputes": 0.0,
       "reminders_sent": 3.0,
@@ -217,80 +678,505 @@
     }
   },
   {
-    "invoice_id": "INV-097",
-    "customer_id": "CUST-002",
-    "customer_name": "Bharat Manufacturing Co",
-    "amount": 445000.0,
-    "amount_outstanding": 445000.0,
-    "due_date": "2025-02-28",
-    "days_overdue": 20,
-    "risk_level": "LOW",
-    "risk_score": 34.3,
+    "invoice_id": "INV-2288",
+    "customer_id": "C-08",
+    "customer_name": "Kesteven Industrial",
+    "amount": 78678.57,
+    "amount_outstanding": 78678.57,
+    "due_date": "2026-09-18",
+    "days_overdue": 33,
+    "risk_level": "MEDIUM",
+    "risk_score": 38.6,
     "reasons": [
-      "Customer historically pays late: 10 of 10 past invoices were overdue (100%)",
-      "Moderate average payment delay: 19 days",
-      "Current invoice is 20 days overdue",
-      "Invoice amount ₹445,000 is above the high-value threshold"
+      "Customer historically pays late: 16 of 16 past invoices were overdue (100%)",
+      "Moderate average payment delay: 15 days",
+      "Current invoice is 33 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
     ],
     "features": {
       "historical_late_rate": 100.0,
-      "avg_days_late": 19.4,
+      "avg_days_late": 15.0625,
+      "current_overdue_days": 33.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2125",
+    "customer_id": "C-03",
+    "customer_name": "Perrin Life Sciences",
+    "amount": 17543.97,
+    "amount_outstanding": 17543.97,
+    "due_date": "2026-09-29",
+    "days_overdue": 22,
+    "risk_level": "MEDIUM",
+    "risk_score": 36.4,
+    "reasons": [
+      "Customer has moderate late-payment history: 16 of 30 invoices paid late",
+      "Average payment delay: 23 days late across historical invoices",
+      "Current invoice is 22 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Recent payment behavior is worsening compared to historical average"
+    ],
+    "features": {
+      "historical_late_rate": 53.333333333333336,
+      "avg_days_late": 22.625,
+      "current_overdue_days": 22.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 1.0
+    }
+  },
+  {
+    "invoice_id": "INV-2126",
+    "customer_id": "C-03",
+    "customer_name": "Perrin Life Sciences",
+    "amount": 34177.59,
+    "amount_outstanding": 34177.59,
+    "due_date": "2026-10-01",
+    "days_overdue": 20,
+    "risk_level": "MEDIUM",
+    "risk_score": 35.9,
+    "reasons": [
+      "Customer has moderate late-payment history: 16 of 30 invoices paid late",
+      "Average payment delay: 23 days late across historical invoices",
+      "Current invoice is 20 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Recent payment behavior is worsening compared to historical average"
+    ],
+    "features": {
+      "historical_late_rate": 53.333333333333336,
+      "avg_days_late": 22.625,
       "current_overdue_days": 20.0,
       "broken_promises": 0.0,
       "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 1.0
+    }
+  },
+  {
+    "invoice_id": "INV-2431",
+    "customer_id": "C-12",
+    "customer_name": "Woodvale Systems",
+    "amount": 11706.36,
+    "amount_outstanding": 11706.36,
+    "due_date": "2026-09-08",
+    "days_overdue": 43,
+    "risk_level": "MEDIUM",
+    "risk_score": 35.9,
+    "reasons": [
+      "Customer historically pays late: 37 of 51 past invoices were overdue (73%)",
+      "Average payment delay: 23 days late across historical invoices",
+      "Current invoice is 43 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 72.54901960784314,
+      "avg_days_late": 22.945945945945947,
+      "current_overdue_days": 43.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2432",
+    "customer_id": "C-12",
+    "customer_name": "Woodvale Systems",
+    "amount": 8663.34,
+    "amount_outstanding": 8663.34,
+    "due_date": "2026-09-13",
+    "days_overdue": 38,
+    "risk_level": "LOW",
+    "risk_score": 34.8,
+    "reasons": [
+      "Customer historically pays late: 37 of 51 past invoices were overdue (73%)",
+      "Average payment delay: 23 days late across historical invoices",
+      "Current invoice is 38 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 72.54901960784314,
+      "avg_days_late": 22.945945945945947,
+      "current_overdue_days": 38.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2430",
+    "customer_id": "C-12",
+    "customer_name": "Woodvale Systems",
+    "amount": 15018.0,
+    "amount_outstanding": 15018.0,
+    "due_date": "2026-09-09",
+    "days_overdue": 42,
+    "risk_level": "LOW",
+    "risk_score": 33.2,
+    "reasons": [
+      "Customer historically pays late: 37 of 51 past invoices were overdue (73%)",
+      "Average payment delay: 23 days late across historical invoices",
+      "Current invoice is 42 days overdue (seriously past due)"
+    ],
+    "features": {
+      "historical_late_rate": 72.54901960784314,
+      "avg_days_late": 22.945945945945947,
+      "current_overdue_days": 42.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
       "reminders_sent": 0.0,
       "worsening_behavior": 0.0
     }
   },
   {
-    "invoice_id": "INV-099",
-    "customer_id": "CUST-006",
-    "customer_name": "Precision Engineers Ltd",
-    "amount": 395000.0,
-    "amount_outstanding": 395000.0,
-    "due_date": "2025-03-08",
-    "days_overdue": 12,
+    "invoice_id": "INV-2324",
+    "customer_id": "C-09",
+    "customer_name": "Dunmore Foods",
+    "amount": 6758.56,
+    "amount_outstanding": 6758.56,
+    "due_date": "2026-09-07",
+    "days_overdue": 44,
     "risk_level": "LOW",
-    "risk_score": 32.5,
+    "risk_score": 32.4,
     "reasons": [
-      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
-      "Moderate average payment delay: 16 days",
-      "Current invoice is 12 day(s) overdue",
-      "1 payment reminder(s) already sent for this invoice",
-      "Invoice amount ₹395,000 is above the high-value threshold"
+      "Customer has moderate late-payment history: 13 of 34 invoices paid late",
+      "Current invoice is 44 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Recent payment behavior is worsening compared to historical average"
     ],
     "features": {
-      "historical_late_rate": 100.0,
-      "avg_days_late": 16.0,
+      "historical_late_rate": 38.23529411764706,
+      "avg_days_late": 2.1538461538461537,
+      "current_overdue_days": 44.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 1.0
+    }
+  },
+  {
+    "invoice_id": "INV-2323",
+    "customer_id": "C-09",
+    "customer_name": "Dunmore Foods",
+    "amount": 9765.8,
+    "amount_outstanding": 9765.8,
+    "due_date": "2026-09-16",
+    "days_overdue": 35,
+    "risk_level": "LOW",
+    "risk_score": 30.4,
+    "reasons": [
+      "Customer has moderate late-payment history: 13 of 34 invoices paid late",
+      "Current invoice is 35 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive",
+      "Recent payment behavior is worsening compared to historical average"
+    ],
+    "features": {
+      "historical_late_rate": 38.23529411764706,
+      "avg_days_late": 2.1538461538461537,
+      "current_overdue_days": 35.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 1.0
+    }
+  },
+  {
+    "invoice_id": "INV-2162",
+    "customer_id": "C-04",
+    "customer_name": "Vantage Metalworks",
+    "amount": 12659.32,
+    "amount_outstanding": 12659.32,
+    "due_date": "2026-09-16",
+    "days_overdue": 35,
+    "risk_level": "LOW",
+    "risk_score": 26.9,
+    "reasons": [
+      "Customer has moderate late-payment history: 16 of 34 invoices paid late",
+      "Moderate average payment delay: 20 days",
+      "Current invoice is 35 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 47.05882352941176,
+      "avg_days_late": 19.625,
+      "current_overdue_days": 35.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2161",
+    "customer_id": "C-04",
+    "customer_name": "Vantage Metalworks",
+    "amount": 7045.9,
+    "amount_outstanding": 7045.9,
+    "due_date": "2026-09-22",
+    "days_overdue": 29,
+    "risk_level": "LOW",
+    "risk_score": 25.6,
+    "reasons": [
+      "Customer has moderate late-payment history: 16 of 34 invoices paid late",
+      "Moderate average payment delay: 20 days",
+      "Current invoice is 29 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 47.05882352941176,
+      "avg_days_late": 19.625,
+      "current_overdue_days": 29.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2229",
+    "customer_id": "C-06",
+    "customer_name": "Northbrook Health",
+    "amount": 26801.74,
+    "amount_outstanding": 26801.74,
+    "due_date": "2026-09-01",
+    "days_overdue": 50,
+    "risk_level": "LOW",
+    "risk_score": 21.0,
+    "reasons": [
+      "Current invoice is 50 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 28.000000000000004,
+      "avg_days_late": 1.7142857142857142,
+      "current_overdue_days": 50.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2377",
+    "customer_id": "C-11",
+    "customer_name": "Ingleby Transport",
+    "amount": 24021.85,
+    "amount_outstanding": 24021.85,
+    "due_date": "2026-09-07",
+    "days_overdue": 44,
+    "risk_level": "LOW",
+    "risk_score": 20.6,
+    "reasons": [
+      "Customer has moderate late-payment history: 5 of 16 invoices paid late",
+      "Current invoice is 44 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 31.25,
+      "avg_days_late": 2.2,
+      "current_overdue_days": 44.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2232",
+    "customer_id": "C-06",
+    "customer_name": "Northbrook Health",
+    "amount": 21017.91,
+    "amount_outstanding": 21017.91,
+    "due_date": "2026-09-22",
+    "days_overdue": 29,
+    "risk_level": "LOW",
+    "risk_score": 16.4,
+    "reasons": [
+      "Current invoice is 29 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 28.000000000000004,
+      "avg_days_late": 1.7142857142857142,
+      "current_overdue_days": 29.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2033",
+    "customer_id": "C-01",
+    "customer_name": "Halvorsen Logistics",
+    "amount": 18548.72,
+    "amount_outstanding": 18548.72,
+    "due_date": "2026-09-01",
+    "days_overdue": 50,
+    "risk_level": "LOW",
+    "risk_score": 13.6,
+    "reasons": [
+      "Current invoice is 50 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 0.0,
+      "avg_days_late": 0.0,
+      "current_overdue_days": 50.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2234",
+    "customer_id": "C-06",
+    "customer_name": "Northbrook Health",
+    "amount": 27473.79,
+    "amount_outstanding": 27473.79,
+    "due_date": "2026-10-06",
+    "days_overdue": 15,
+    "risk_level": "LOW",
+    "risk_score": 13.3,
+    "reasons": [
+      "Current invoice is 15 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 28.000000000000004,
+      "avg_days_late": 1.7142857142857142,
+      "current_overdue_days": 15.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2233",
+    "customer_id": "C-06",
+    "customer_name": "Northbrook Health",
+    "amount": 25303.99,
+    "amount_outstanding": 25303.99,
+    "due_date": "2026-10-09",
+    "days_overdue": 12,
+    "risk_level": "LOW",
+    "risk_score": 12.6,
+    "reasons": [
+      "Current invoice is 12 day(s) overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 28.000000000000004,
+      "avg_days_late": 1.7142857142857142,
       "current_overdue_days": 12.0,
       "broken_promises": 0.0,
       "previous_disputes": 0.0,
-      "reminders_sent": 1.0,
+      "reminders_sent": 3.0,
       "worsening_behavior": 0.0
     }
   },
   {
-    "invoice_id": "INV-100",
-    "customer_id": "CUST-010",
-    "customer_name": "Metro Infra Projects",
-    "amount": 520000.0,
-    "amount_outstanding": 520000.0,
-    "due_date": "2025-03-20",
-    "days_overdue": 0,
+    "invoice_id": "INV-2034",
+    "customer_id": "C-01",
+    "customer_name": "Halvorsen Logistics",
+    "amount": 25319.36,
+    "amount_outstanding": 25319.36,
+    "due_date": "2026-09-10",
+    "days_overdue": 41,
     "risk_level": "LOW",
-    "risk_score": 30.1,
+    "risk_score": 11.6,
     "reasons": [
-      "Customer historically pays late: 9 of 9 past invoices were overdue (100%)",
-      "Average payment delay: 21 days late across historical invoices",
-      "Invoice amount ₹520,000 is above the high-value threshold"
+      "Current invoice is 41 days overdue (seriously past due)",
+      "3 payment reminders sent with no response — customer non-responsive"
     ],
     "features": {
-      "historical_late_rate": 100.0,
-      "avg_days_late": 20.555555555555557,
-      "current_overdue_days": 0.0,
+      "historical_late_rate": 0.0,
+      "avg_days_late": 0.0,
+      "current_overdue_days": 41.0,
       "broken_promises": 0.0,
       "previous_disputes": 0.0,
-      "reminders_sent": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2378",
+    "customer_id": "C-11",
+    "customer_name": "Ingleby Transport",
+    "amount": 17815.97,
+    "amount_outstanding": 17815.97,
+    "due_date": "2026-10-19",
+    "days_overdue": 2,
+    "risk_level": "LOW",
+    "risk_score": 11.3,
+    "reasons": [
+      "Customer has moderate late-payment history: 5 of 16 invoices paid late",
+      "Current invoice is 2 day(s) overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 31.25,
+      "avg_days_late": 2.2,
+      "current_overdue_days": 2.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2035",
+    "customer_id": "C-01",
+    "customer_name": "Halvorsen Logistics",
+    "amount": 10790.74,
+    "amount_outstanding": 10790.74,
+    "due_date": "2026-09-28",
+    "days_overdue": 23,
+    "risk_level": "LOW",
+    "risk_score": 7.6,
+    "reasons": [
+      "Current invoice is 23 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 0.0,
+      "avg_days_late": 0.0,
+      "current_overdue_days": 23.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
+      "worsening_behavior": 0.0
+    }
+  },
+  {
+    "invoice_id": "INV-2036",
+    "customer_id": "C-01",
+    "customer_name": "Halvorsen Logistics",
+    "amount": 24842.03,
+    "amount_outstanding": 24842.03,
+    "due_date": "2026-10-03",
+    "days_overdue": 18,
+    "risk_level": "LOW",
+    "risk_score": 6.5,
+    "reasons": [
+      "Current invoice is 18 days overdue",
+      "3 payment reminders sent with no response — customer non-responsive"
+    ],
+    "features": {
+      "historical_late_rate": 0.0,
+      "avg_days_late": 0.0,
+      "current_overdue_days": 18.0,
+      "broken_promises": 0.0,
+      "previous_disputes": 0.0,
+      "reminders_sent": 3.0,
       "worsening_behavior": 0.0
     }
   }
