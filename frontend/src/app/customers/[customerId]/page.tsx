@@ -1,198 +1,74 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { fetchCustomer, fetchInvoices, fetchReplay } from "@/lib/api";
-import {
-  StatusBadge,
-  RiskBadge,
-  DeliveryModeBadge,
-} from "@/components/shared/badges";
-import { formatINRFull, formatDate } from "@/lib/utils";
-import { ArrowLeft, TrendingUp, FileText } from "lucide-react";
+'use client'
 
-export default async function CustomerDetailPage({
-  params,
-}: {
-  params: Promise<{ customerId: string }>;
-}) {
-  const { customerId } = await params;
-  let rawCustomer;
-  try {
-    rawCustomer = await fetchCustomer(customerId);
-  } catch {
-    return notFound();
-  }
-  const [allInvoices, allActions] = await Promise.all([
-    fetchInvoices(),
-    fetchReplay(),
-  ]);
-  const customer = {
-    id: rawCustomer.customer_id,
-    name: rawCustomer.customer_name,
-    email: rawCustomer.contact_email,
-    industry: rawCustomer.industry,
-    totalOutstanding: allInvoices
-      .filter((invoice) => invoice.customerId === customerId)
-      .reduce((sum, invoice) => sum + invoice.amountOutstanding, 0),
-    totalOverdue: allInvoices
-      .filter(
-        (invoice) =>
-          invoice.customerId === customerId && invoice.daysOverdue > 0,
-      )
-      .reduce((sum, invoice) => sum + invoice.amountOutstanding, 0),
-    latePaymentRate: 0,
-    avgPaymentDelayDays: 0,
-    risk: "LOW" as const,
-  };
-  const invoices = allInvoices.filter(
-    (invoice) => invoice.customerId === customer.id,
-  );
-  const actions = allActions.filter(
-    (action) => action.customerId === customer.id,
-  );
+import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
+import { api, ApiCustomerDetail } from '@/lib/api'
+import { PageHeader } from '@/components/shared/page-header'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
+
+function formatINR(n: number) { return '₹' + n.toLocaleString('en-IN') }
+
+export default function CustomerDetailPage() {
+  const { customerId } = useParams<{ customerId: string }>()
+  const [cust, setCust] = useState<ApiCustomerDetail | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (customerId) api.customer(customerId).then(setCust).finally(() => setLoading(false))
+  }, [customerId])
+
+  if (loading) return <div className="py-16 text-center text-muted-foreground">Loading…</div>
+  if (!cust) return <div className="py-16 text-center text-muted-foreground">Customer not found.</div>
 
   return (
-    <div className="max-w-4xl space-y-6 animate-fade-in">
-      <div className="flex items-center gap-3">
-        <Link
-          href="/customers"
-          className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-sm"
-        >
-          <ArrowLeft className="w-4 h-4" /> Customers
-        </Link>
-        <span className="text-muted-foreground">/</span>
-        <span className="text-sm font-semibold text-foreground">
-          {customer.name}
-        </span>
-      </div>
+    <div className="max-w-3xl space-y-5 animate-fade-in">
+      <Link href="/customers" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+        <ArrowLeft className="w-4 h-4" /> Back to customers
+      </Link>
+      <PageHeader title={cust.customer_name} description={`${cust.industry} · ${cust.contact_email}`} />
 
-      {/* Header */}
-      <div className="bg-card border border-border rounded-lg p-6">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold text-lg shrink-0">
-            {customer.name.slice(0, 2).toUpperCase()}
-          </div>
-          <div className="flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-xl font-bold text-foreground">
-                {customer.name}
-              </h1>
-              <RiskBadge risk={customer.risk} />
-            </div>
-            <div className="text-sm text-muted-foreground mt-1">
-              {customer.industry} · {customer.email}
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-border">
-          <div>
-            <div className="text-xs text-muted-foreground font-medium">
-              Total Outstanding
-            </div>
-            <div className="text-base font-bold text-foreground mt-1">
-              {formatINRFull(customer.totalOutstanding)}
-            </div>
-          </div>
-          <div>
-            <div className="text-xs text-muted-foreground font-medium">
-              Overdue
-            </div>
-            <div
-              className={`text-base font-bold mt-1 ${customer.totalOverdue > 0 ? "text-red-600 dark:text-red-400" : "text-emerald-600"}`}
-            >
-              {formatINRFull(customer.totalOverdue)}
-            </div>
-          </div>
-          <div>
-            <div className="text-xs text-muted-foreground font-medium">
-              Late Payment Rate
-            </div>
-            <div
-              className={`text-base font-bold mt-1 ${customer.latePaymentRate >= 60 ? "text-red-600 dark:text-red-400" : customer.latePaymentRate >= 30 ? "text-amber-600" : "text-emerald-600"}`}
-            >
-              {customer.latePaymentRate}%
-            </div>
-          </div>
-          <div>
-            <div className="text-xs text-muted-foreground font-medium">
-              Avg Payment Delay
-            </div>
-            <div className="text-base font-bold text-foreground mt-1">
-              {customer.avgPaymentDelayDays} days
-            </div>
-          </div>
-        </div>
+      <div className="bg-card border border-border rounded-lg p-5 grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <div><div className="text-xs text-muted-foreground">Credit Limit</div><div className="font-medium">{formatINR(cust.credit_limit)}</div></div>
+        <div><div className="text-xs text-muted-foreground">Payment Terms</div><div className="font-medium">{cust.payment_terms_days} days</div></div>
+        <div><div className="text-xs text-muted-foreground">Total Outstanding</div><div className={`font-medium ${cust.total_outstanding > 0 ? 'text-amber-600' : 'text-emerald-600'}`}>{cust.total_outstanding > 0 ? formatINR(cust.total_outstanding) : 'Clear'}</div></div>
+        <div><div className="text-xs text-muted-foreground">Open Invoices</div><div className="font-medium">{cust.open_invoices}</div></div>
+        <div><div className="text-xs text-muted-foreground">Total Invoices</div><div className="font-medium">{cust.invoice_count}</div></div>
       </div>
 
       {/* Invoices */}
-      {invoices.length > 0 && (
-        <div className="bg-card border border-border rounded-lg">
-          <div className="px-5 py-4 border-b border-border flex items-center gap-2">
-            <FileText className="w-4 h-4 text-foreground" />
-            <h2 className="text-sm font-semibold text-foreground">
-              Open Invoices
-            </h2>
-            <span className="ml-auto text-xs text-muted-foreground">
-              {invoices.length}
-            </span>
-          </div>
-          <div className="divide-y divide-border">
-            {invoices.map((inv) => (
-              <Link
-                key={inv.id}
-                href={`/invoices/${inv.id}`}
-                className="flex items-center gap-4 px-5 py-3.5 hover:bg-muted/20 transition-colors"
-              >
-                <span className="font-mono text-xs font-semibold text-primary">
-                  {inv.id}
-                </span>
-                <span className="text-sm text-foreground flex-1">
-                  {inv.description}
-                </span>
-                <span className="text-sm font-bold text-foreground">
-                  {formatINRFull(inv.amountOutstanding)}
-                </span>
-                <StatusBadge status={inv.status} />
-                {inv.daysOverdue > 0 && (
-                  <span className="text-xs text-red-600 dark:text-red-400 font-medium">
-                    {inv.daysOverdue}d OD
-                  </span>
-                )}
-              </Link>
-            ))}
-          </div>
+      <div className="bg-card border border-border rounded-lg">
+        <div className="px-5 py-3 border-b border-border text-sm font-semibold">Invoices ({cust.invoice_count})</div>
+        <div className="divide-y divide-border">
+          {cust.invoices.map(inv => (
+            <div key={inv.invoice_id} className="px-5 py-3 flex justify-between items-center">
+              <div>
+                <Link href={`/invoices/${inv.invoice_id}`} className="font-mono text-sm text-primary hover:underline">{inv.invoice_id}</Link>
+                <div className="text-xs text-muted-foreground mt-0.5">{inv.description}</div>
+              </div>
+              <div className="text-right">
+                <div className="text-sm font-medium">{formatINR(inv.amount)}</div>
+                <div className="text-xs text-muted-foreground">Due {inv.due_date}</div>
+              </div>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
 
-      {/* Recent actions */}
-      {actions.length > 0 && (
+      {/* Emails */}
+      {cust.emails.length > 0 && (
         <div className="bg-card border border-border rounded-lg">
-          <div className="px-5 py-4 border-b border-border flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-foreground" />
-            <h2 className="text-sm font-semibold text-foreground">
-              Recent Agent Actions
-            </h2>
-          </div>
+          <div className="px-5 py-3 border-b border-border text-sm font-semibold">Inbound Emails ({cust.emails.length})</div>
           <div className="divide-y divide-border">
-            {actions.slice(0, 5).map((action) => (
-              <div
-                key={action.id}
-                className="flex items-center gap-3 px-5 py-3.5"
-              >
-                <DeliveryModeBadge mode={action.deliveryMode} />
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm text-foreground capitalize">
-                    {action.action.replace(/_/g, " ")}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {action.invoiceId} · {formatDate(action.date)}
-                  </div>
-                </div>
+            {cust.emails.map(e => (
+              <div key={e.email_id} className="px-5 py-3 flex justify-between items-center text-sm">
+                <span className="truncate">{e.subject}</span>
+                <span className="text-muted-foreground shrink-0 ml-4">{e.received_date}</span>
               </div>
             ))}
           </div>
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -1,83 +1,55 @@
-"use client";
+'use client'
 
-import { PageHeader } from "@/components/shared/page-header";
-import { RiskBadge } from "@/components/shared/badges";
-import { useLiveCustomers } from "@/lib/live-data";
-import { formatINR, formatINRFull } from "@/lib/utils";
-import Link from "next/link";
-import { Building2, ChevronRight } from "lucide-react";
+import { useEffect, useState } from 'react'
+import { api, ApiCustomer } from '@/lib/api'
+import { PageHeader } from '@/components/shared/page-header'
+import Link from 'next/link'
+import { Building2 } from 'lucide-react'
+
+function formatINR(n: number) { return '₹' + n.toLocaleString('en-IN') }
 
 export default function CustomersPage() {
-  const { data: customers = [], isLoading, error } = useLiveCustomers();
-  if (isLoading)
-    return (
-      <div className="text-sm text-muted-foreground">Loading customers...</div>
-    );
-  if (error)
-    return (
-      <div className="text-sm text-red-600">
-        Unable to load customers. Check the backend URL.
-      </div>
-    );
-  const riskOrder = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3 };
-  const sorted = [...customers].sort(
-    (a, b) => riskOrder[a.risk] - riskOrder[b.risk],
-  );
+  const [customers, setCustomers] = useState<ApiCustomer[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    api.customers().then(r => setCustomers(r.customers)).finally(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div className="py-16 text-center text-muted-foreground">Loading customers…</div>
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <PageHeader
-        title="Customers"
-        description="All 12 customers with receivables profile and risk standing."
-      />
+      <PageHeader title="Customers" description={`${customers.length} customers, sorted by outstanding balance`} />
 
-      <div className="bg-card border border-border rounded-lg divide-y divide-border">
-        {sorted.map((c) => (
-          <Link
-            key={c.id}
-            href={`/customers/${c.id}`}
-            className="flex items-center gap-4 px-5 py-4 hover:bg-muted/20 transition-colors group"
-          >
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm shrink-0">
-              {c.name.slice(0, 2).toUpperCase()}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-foreground">
-                  {c.name}
-                </span>
-                <RiskBadge risk={c.risk} />
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        {customers.map(c => (
+          <Link key={c.customer_id} href={`/customers/${c.customer_id}`} className="bg-card border border-border rounded-lg p-5 hover:border-primary/50 hover:shadow-sm transition-all block">
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                <Building2 className="w-4 h-4 text-primary" />
               </div>
-              <div className="text-xs text-muted-foreground mt-0.5">
-                {c.industry} · {c.invoiceCount} invoices · {c.latePaymentRate}%
-                late-pay rate · avg {c.avgPaymentDelayDays}d delay
+              <div className="min-w-0">
+                <div className="font-semibold text-sm truncate">{c.customer_name}</div>
+                <div className="text-xs text-muted-foreground">{c.industry} · {c.payment_terms_days}d terms</div>
               </div>
             </div>
-            <div className="text-right shrink-0 hidden md:block">
-              {c.totalOutstanding > 0 ? (
-                <>
-                  <div className="text-sm font-bold text-foreground">
-                    {formatINR(c.totalOutstanding)}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    outstanding
-                  </div>
-                  {c.totalOverdue > 0 && (
-                    <div className="text-xs text-red-600 dark:text-red-400">
-                      {formatINR(c.totalOverdue)} overdue
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
-                  All paid
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <div>
+                <div className="text-xs text-muted-foreground">Outstanding</div>
+                <div className={`text-sm font-semibold ${c.total_outstanding > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                  {c.total_outstanding > 0 ? formatINR(c.total_outstanding) : 'Clear'}
                 </div>
-              )}
+              </div>
+              <div>
+                <div className="text-xs text-muted-foreground">Open Invoices</div>
+                <div className="text-sm font-semibold">{c.open_invoices}</div>
+              </div>
             </div>
-            <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+            <div className="mt-3 pt-3 border-t border-border text-xs text-muted-foreground truncate">{c.contact_email}</div>
           </Link>
         ))}
       </div>
     </div>
-  );
+  )
 }
