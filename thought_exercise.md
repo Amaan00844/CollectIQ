@@ -16,7 +16,7 @@ The available data — three sets of mix design documents plus 30–50 captioned
 - **Defect photos are effects, not causes.** The photos tell us what went wrong; they do not tell us the environmental conditions (temperature, humidity, curing time variance), workmanship quality, or pour sequencing that caused it. Without those, we cannot close the causal loop.
 - **Captions provide type, not severity or root cause.** A QA engineer writing "honeycomb defect" is not the same as a labelled dataset with defect location, affected volume, and root cause classification.
 
-Tell the client: *We can build a system that tells your QA team which defect types are most associated with mixes like yours, based on historical projects. That is useful and honest. Calling it predictive would be misleading and would erode trust when it fails on the fourth project.*
+Tell the client: _We can build a system that tells your QA team which defect types are most associated with mixes like yours, based on historical projects. That is useful and honest. Calling it predictive would be misleading and would erode trust when it fails on the fourth project._
 
 ## Three Data Items to Request (Chosen Carefully)
 
