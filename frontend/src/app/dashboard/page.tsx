@@ -4,11 +4,7 @@ import { useEffect, useState } from "react";
 import { api, ApiInvoice, ApiAction, ApiRiskItem } from "@/lib/api";
 import { KpiCard } from "@/components/shared/kpi-card";
 import { PageHeader } from "@/components/shared/page-header";
-import {
-  StatusBadge,
-  RiskBadge,
-  DeliveryModeBadge,
-} from "@/components/shared/badges";
+import { RiskBadge, DeliveryModeBadge } from "@/components/shared/badges";
 import {
   AreaChart,
   Area,
@@ -26,7 +22,6 @@ import {
   AlertTriangle,
   CheckCircle,
   Clock,
-  IndianRupee,
   Activity,
 } from "lucide-react";
 
@@ -83,17 +78,15 @@ export default function DashboardPage() {
     },
   ];
 
-  // Area chart: actions per month
   const monthlyMap: Record<string, number> = {};
   actions.forEach((a) => {
-    const m = a.date.slice(0, 7);
-    monthlyMap[m] = (monthlyMap[m] || 0) + 1;
+    const month = a.date.slice(0, 7);
+    monthlyMap[month] = (monthlyMap[month] || 0) + 1;
   });
   const chartData = Object.entries(monthlyMap)
     .sort()
     .map(([month, count]) => ({ month, actions: count }));
 
-  // Recent 8 actions
   const recent = [...actions]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 8);
@@ -105,33 +98,24 @@ export default function DashboardPage() {
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard
-          title="Total Outstanding"
+          label="Total Outstanding"
           value={formatINR(totalOutstanding)}
-          icon={IndianRupee}
           trend="up"
-          trendValue=""
         />
         <KpiCard
-          title="Overdue Invoices"
+          label="Overdue Invoices"
           value={overdueCount.toString()}
-          icon={AlertTriangle}
           trend="up"
-          trendValue=""
-          className="border-amber-200 dark:border-amber-900"
         />
         <KpiCard
-          title="Paid Invoices"
+          label="Paid Invoices"
           value={paidCount.toString()}
-          icon={CheckCircle}
           trend="neutral"
-          trendValue=""
         />
         <KpiCard
-          title="High Risk"
+          label="High Risk"
           value={highRisk.toString()}
-          icon={Activity}
           trend={highRisk > 0 ? "up" : "neutral"}
-          trendValue=""
         />
       </div>
 
